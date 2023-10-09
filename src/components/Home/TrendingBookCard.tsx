@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-export interface Book {
+export interface TrendingBook {
   key: string;
   title: string;
   edition_count: number;
@@ -15,9 +17,11 @@ export interface Book {
 }
 
 interface TrendingBookCardProps {
-  book: Book;
+  book: TrendingBook | undefined;
   activeBookCard: string | undefined;
-  setActiveBookCard: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setActiveBookCard:
+    | React.Dispatch<React.SetStateAction<string | undefined>>
+    | undefined;
 }
 
 const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
@@ -25,36 +29,66 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
   activeBookCard,
   setActiveBookCard,
 }) => {
+  const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
   return (
     <div
       onClick={() => {
-        setActiveBookCard(book.cover_edition_key);
+        setActiveBookCard && setActiveBookCard(book?.key);
       }}
       className={`${
-        activeBookCard !== book.cover_edition_key ? "bg-white" : "bg-red-900"
+        activeBookCard !== book?.key ? "bg-white" : "bg-red-900"
       } border-2  border-red-900 flex min-h-[14rem] p-3 rounded-xl items-center`}
     >
-      <img
-        className={`w-40 object-contain border-2 ${
-          activeBookCard !== book.cover_edition_key
-            ? "border-red-900"
-            : "border-white"
-        } rounded-xl`}
-        src={`http://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg`}
-        alt={book.title}
-      />
+      {!isImageLoaded && <Skeleton width={160} height={240} />}
+      <div
+        className={`w-40 h-60 ${
+          !isImageLoaded && "hidden"
+        } rounded-xl bg-black/80 backdrop-blur-md`}
+      >
+        <img
+          className={`w-40 h-60 object-contain border-2 ${
+            !isImageLoaded && "hidden h-60"
+          } ${
+            activeBookCard !== book?.key ? "border-red-900" : "border-white"
+          } rounded-xl`}
+          src={`http://covers.openlibrary.org/b/olid/${book?.cover_edition_key}-M.jpg`}
+          alt={book?.title}
+          onLoad={() => {
+            setIsImageLoaded(true);
+          }}
+        />
+      </div>
 
       <div
         className={`flex-1 transition-all ${
-          activeBookCard !== book.cover_edition_key
-            ? "text-black"
-            : "text-white"
+          activeBookCard !== book?.key ? "text-black" : "text-white"
         } ml-3`}
       >
-        <span className="font-bold ">{book.title}</span>
+        <span className="font-bold ">
+          {book?.title || (
+            <Skeleton
+              height={30}
+              width={200}
+              baseColor="white"
+              highlightColor="gray"
+            />
+          )}
+        </span>
         <div className="text-sm">
-          <span>{book.author_name.join(", ")}</span>
-          <span> &middot; {book.first_publish_year}</span>
+          {!book?.first_publish_year || !book.author_name ? (
+            <Skeleton
+              height={20}
+              width={100}
+              baseColor="white"
+              highlightColor="gray"
+            />
+          ) : (
+            <>
+              {" "}
+              <span>{book?.author_name.join(", ")}</span>
+              <span> &middot; {book?.first_publish_year}</span>
+            </>
+          )}
         </div>
       </div>
     </div>

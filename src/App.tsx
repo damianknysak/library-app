@@ -10,9 +10,9 @@ import Settings from "./Pages/Settings";
 import Help from "./Pages/Help";
 function App() {
   return (
-    <div className="w-full min-h-screen p-10 flex flex-col lg:flex-row">
+    <div className="w-screen min-h-screen p-10 flex flex-col lg:flex-row">
       <Header />
-      <div className="mt-10 lg:mt-20">
+      <div className="mt-10 lg:mt-20 w-full">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/category" element={<Category />} />

@@ -1,13 +1,13 @@
 import {useEffect, useState} from "react";
-import {BooksArray} from "../components/Home/TrendingBooks";
+import {TrendingBooksArray} from "../components/Home/TrendingBooks";
 
 interface FetchProps {
   API_URL: string;
 }
 
-export const useFetch = ({API_URL}: FetchProps) => {
+export const useTrendingBookFetch = ({API_URL}: FetchProps) => {
   const [pending, setPending] = useState<boolean>(false);
-  const [data, setData] = useState<BooksArray>();
+  const [data, setData] = useState<TrendingBooksArray>();
 
   const fetchAsync = async () => {
     setPending(true);

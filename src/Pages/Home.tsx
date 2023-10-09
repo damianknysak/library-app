@@ -4,11 +4,8 @@ import DetailsPanel from "../components/Home/DetailsPanel";
 
 const Home: React.FC = () => {
   return (
-    <div className="">
-      <div className="flex">
-        <TrendingBooks />
-        <DetailsPanel />
-      </div>
+    <div className="w-full">
+      <TrendingBooks />
     </div>
   );
 };
