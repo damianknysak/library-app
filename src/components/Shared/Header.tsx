@@ -1,5 +1,4 @@
 import React from "react";
-import HamburgerButton from "./HamburgerButton";
 import AsideHeader from "./AsideHeader";
 import HorizontalHeader from "./HorizontalHeader";
 const Header: React.FC = () => {

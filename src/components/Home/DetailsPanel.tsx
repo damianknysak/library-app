@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
-import {useBookDetailedFetch} from "../../hooks/useBookDetailedFetch";
-import {TrendingBook} from "./TrendingBookCard";
+import React, { useEffect, useState } from "react";
+import { useBookDetailedFetch } from "../../hooks/useBookDetailedFetch";
+import { TrendingBook } from "./TrendingBookCard";
 import Skeleton from "react-loading-skeleton";
-import {Rating} from "react-simple-star-rating";
+import { Rating } from "react-simple-star-rating";
+import ShowMoreText from "react-show-more-text";
 
 export interface SummaryRatingProps {
   average: number;
@@ -24,13 +25,15 @@ interface DetailedPanelProps {
   book: TrendingBook | undefined;
 }
 
-const DetailsPanel: React.FC<DetailedPanelProps> = ({activeBook, book}) => {
-  const {data, pending} = useBookDetailedFetch({WORKS_KEY: activeBook});
+const DetailsPanel: React.FC<DetailedPanelProps> = ({ activeBook, book }) => {
+  const { data } = useBookDetailedFetch({ WORKS_KEY: activeBook });
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     setIsImageLoaded(false);
+    console.log(JSON.stringify(data));
   }, [data]);
+
   return (
     <div className="hidden xl:flex flex-col items-center space-y-4 pt-10 min-w-[20rem] ml-10 p-2 bg-red-900">
       <span className="text-white text-lg font-bold text-center">
@@ -72,11 +75,28 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({activeBook, book}) => {
             allowFraction
             size={20}
             initialValue={data?.ratings.average}
-            /* Available Props */
           />
 
           <span>{data?.ratings.average.toFixed(2)}</span>
         </div>
+      ) : (
+        <Skeleton height={20} width={100} />
+      )}
+
+      {data ? (
+        <ShowMoreText
+          /* Default options */
+          lines={3}
+          more="Show more"
+          less="Show less"
+          className="content-css"
+          anchorClass="show-more-less-clickable"
+          expanded={false}
+          width={280}
+          truncatedEndingComponent={"... "}
+        >
+          {data.description}
+        </ShowMoreText>
       ) : (
         <Skeleton height={20} width={100} />
       )}

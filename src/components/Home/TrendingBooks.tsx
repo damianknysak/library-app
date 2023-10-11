@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from "react";
-import {TrendingBook} from "./TrendingBookCard";
+import React, { useEffect, useState } from "react";
+import { TrendingBook } from "./TrendingBookCard";
 import TrendingBookCard from "./TrendingBookCard";
 import DetailsPanel from "./DetailsPanel";
-import {useTrendingBookFetch} from "../../hooks/useTrendingBookFetch";
-import Skeleton from "react-loading-skeleton";
+import { useTrendingBookFetch } from "../../hooks/useTrendingBookFetch";
 import "react-loading-skeleton/dist/skeleton.css";
+import { LOADING_TRENDING_BOOKS_DATASET } from "../../Datasets";
 export interface TrendingBooksArray {
   works: TrendingBook[];
 }
 
 const TrendingBooks: React.FC = () => {
-  const {data} = useTrendingBookFetch({
+  const { data } = useTrendingBookFetch({
     API_URL: "http://openlibrary.org/trending/daily.json?limit=6",
   });
 
@@ -24,59 +24,44 @@ const TrendingBooks: React.FC = () => {
 
   return (
     <div className="flex w-full">
-      {data ? (
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-5">
-          {data.works.map((book) => (
-            <TrendingBookCard
-              key={book.key}
-              book={book}
-              activeBookCard={activeBookCard}
-              setActiveBookCard={setActiveBookCard}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 my-5">
-          <TrendingBookCard
-            book={undefined}
-            activeBookCard={undefined}
-            setActiveBookCard={undefined}
-          />
-          <TrendingBookCard
-            book={undefined}
-            activeBookCard={undefined}
-            setActiveBookCard={undefined}
-          />
-          <TrendingBookCard
-            book={undefined}
-            activeBookCard={undefined}
-            setActiveBookCard={undefined}
-          />
-          <TrendingBookCard
-            book={undefined}
-            activeBookCard={undefined}
-            setActiveBookCard={undefined}
-          />
-          <TrendingBookCard
-            book={undefined}
-            activeBookCard={undefined}
-            setActiveBookCard={undefined}
-          />
-          <TrendingBookCard
-            book={undefined}
-            activeBookCard={undefined}
-            setActiveBookCard={undefined}
-          />
-        </div>
-      )}
-      <DetailsPanel
-        activeBook={activeBookCard}
-        book={
-          data
-            ? data?.works.find((book) => book.key === activeBookCard)
-            : undefined
-        }
-      />
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 my-5 xl:max-h-[50rem]">
+        {data ? (
+          <>
+            {data.works.map((book) => (
+              <TrendingBookCard
+                key={book.key}
+                book={book}
+                activeBookCard={activeBookCard}
+                setActiveBookCard={setActiveBookCard}
+              />
+            ))}
+          </>
+        ) : (
+          <>
+            {LOADING_TRENDING_BOOKS_DATASET.map((item, index) => {
+              return (
+                <TrendingBookCard
+                  key={item.index}
+                  book={undefined}
+                  activeBookCard={undefined}
+                  setActiveBookCard={undefined}
+                />
+              );
+            })}
+          </>
+        )}
+      </div>
+
+      <div className="w-96">
+        <DetailsPanel
+          activeBook={activeBookCard}
+          book={
+            data
+              ? data?.works.find((book) => book.key === activeBookCard)
+              : undefined
+          }
+        />
+      </div>
     </div>
   );
 };

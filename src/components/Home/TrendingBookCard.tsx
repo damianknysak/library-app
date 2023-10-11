@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -37,7 +37,7 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
       }}
       className={`${
         activeBookCard !== book?.key ? "bg-white" : "bg-red-900"
-      } border-2  border-red-900 flex min-h-[14rem] p-3 rounded-xl items-center`}
+      } border-2  border-red-900 flex min-h-[14rem] p-3 rounded-xl items-center max-h-[16rem]`}
     >
       {!isImageLoaded && <Skeleton width={160} height={240} />}
       <div
@@ -84,7 +84,6 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
             />
           ) : (
             <>
-              {" "}
               <span>{book?.author_name.join(", ")}</span>
               <span> &middot; {book?.first_publish_year}</span>
             </>

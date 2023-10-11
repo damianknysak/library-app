@@ -1,11 +1,11 @@
-import {useEffect, useState} from "react";
-import {DetailedBookProps} from "../components/Home/DetailsPanel";
+import { useEffect, useState } from "react";
+import { DetailedBookProps } from "../components/Home/DetailsPanel";
 
 interface FetchProps {
   WORKS_KEY: string | undefined;
 }
 
-export const useBookDetailedFetch = ({WORKS_KEY}: FetchProps) => {
+export const useBookDetailedFetch = ({ WORKS_KEY }: FetchProps) => {
   const [pending, setPending] = useState<boolean>(false);
   const [data, setData] = useState<DetailedBookProps>();
 
@@ -21,6 +21,9 @@ export const useBookDetailedFetch = ({WORKS_KEY}: FetchProps) => {
     const ratingsResponseJson = await ratingsResponse.json();
 
     responseJson.ratings = ratingsResponseJson.summary;
+    if (typeof responseJson.description == "object") {
+      responseJson.description = responseJson.description.value;
+    }
     setData(responseJson);
     setPending(false);
   };
