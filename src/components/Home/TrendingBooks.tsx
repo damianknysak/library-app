@@ -1,29 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { TrendingBook } from "./TrendingBookCard";
-import TrendingBookCard from "./TrendingBookCard";
-import DetailsPanel from "./DetailsPanel";
-import { useTrendingBookFetch } from "../../hooks/useTrendingBookFetch";
-import "react-loading-skeleton/dist/skeleton.css";
+import React from "react";
 import { LOADING_TRENDING_BOOKS_DATASET } from "../../Datasets";
-export interface TrendingBooksArray {
-  works: TrendingBook[];
+import TrendingBookCard, { TrendingBook } from "./TrendingBookCard";
+import { TrendingBooksArray } from "../../Pages/Home";
+
+interface TrendingBookProps {
+  data: TrendingBooksArray | undefined;
+  activeBookCard: string | undefined;
+  setActiveBookCard: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
-const TrendingBooks: React.FC = () => {
-  const { data } = useTrendingBookFetch({
-    API_URL: "http://openlibrary.org/trending/daily.json?limit=20",
-  });
-
-  const [activeBookCard, setActiveBookCard] = useState<string | undefined>();
-
-  useEffect(() => {
-    if (data && !activeBookCard) {
-      setActiveBookCard(data?.works[0].key);
-    }
-  }, [data, activeBookCard]);
-
+const TrendingBooks: React.FC<TrendingBookProps> = ({
+  data,
+  activeBookCard,
+  setActiveBookCard,
+}) => {
   return (
-    <div className="flex lg:ml-[15rem]">
+    <>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-5 flex-1">
         {data ? (
           <>
@@ -51,17 +43,7 @@ const TrendingBooks: React.FC = () => {
           </>
         )}
       </div>
-      <div className="hidden lg:block lg:w-[25rem]">
-        <DetailsPanel
-          activeBook={activeBookCard}
-          book={
-            data
-              ? data?.works.find((book) => book.key === activeBookCard)
-              : undefined
-          }
-        />
-      </div>
-    </div>
+    </>
   );
 };
 
