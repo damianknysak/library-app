@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import Header from "./components/Shared/Header";
 import Category from "./Pages/Category";

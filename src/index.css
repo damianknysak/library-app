@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.root,
+#root,
+#docs-root {
+  --primary: #5e2222;
+  --secondary: #ba6729;
+}
+
+body {
+    overflow-x: hidden;
+  }

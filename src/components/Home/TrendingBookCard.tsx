@@ -36,8 +36,8 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
         setActiveBookCard && setActiveBookCard(book?.key);
       }}
       className={`${
-        activeBookCard !== book?.key ? "bg-white" : "bg-red-900"
-      } border-2  border-red-900 flex min-h-[14rem] p-3 rounded-xl items-center max-h-[16rem]`}
+        activeBookCard !== book?.key ? "bg-white" : "bg-[--primary]"
+      } border-2  border-[--primary] flex min-h-[14rem] p-3 rounded-xl items-center max-h-[16rem] cursor-pointer`}
     >
       {!isImageLoaded && <Skeleton width={160} height={240} />}
       <div
@@ -49,7 +49,7 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
           className={`w-40 h-60 object-contain border-2 ${
             !isImageLoaded && "hidden h-60"
           } ${
-            activeBookCard !== book?.key ? "border-red-900" : "border-white"
+            activeBookCard !== book?.key ? "border-[--primary]" : "border-white"
           } rounded-xl`}
           src={`http://covers.openlibrary.org/b/olid/${book?.cover_edition_key}-M.jpg`}
           alt={book?.title}

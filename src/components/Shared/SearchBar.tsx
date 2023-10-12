@@ -1,5 +1,5 @@
-import React, {useRef} from "react";
-import {BiSearchAlt} from "react-icons/bi";
+import React, { useRef } from "react";
+import { BiSearchAlt } from "react-icons/bi";
 
 const SearchBar: React.FC = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -9,7 +9,7 @@ const SearchBar: React.FC = () => {
         onClick={() => {
           inputRef.current && inputRef.current.focus();
         }}
-        className="flex max-w-md items-center space-x-2 bg-gray-300 p-3 px-5 rounded-3xl"
+        className="flex max-w-md items-center space-x-2 bg-gray-300 p-3 px-5 xl:pr-20 rounded-3xl"
       >
         <BiSearchAlt size={25} />
         <input

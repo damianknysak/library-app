@@ -1,12 +1,12 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 const HamburgerButton: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-yellow-800 transition ease transform duration-300`;
+  const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-[--primary] transition ease transform duration-300`;
 
   return (
     <button
-      className="flex flex-col h-12 w-12 border-2 border-yellow-800 rounded justify-center items-center group"
+      className="flex flex-col h-12 w-12 border-2 border-[--primary] rounded justify-center items-center group"
       onClick={() => setIsOpen(!isOpen)}
     >
       <div

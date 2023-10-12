@@ -11,7 +11,7 @@ export interface TrendingBooksArray {
 
 const TrendingBooks: React.FC = () => {
   const { data } = useTrendingBookFetch({
-    API_URL: "http://openlibrary.org/trending/daily.json?limit=6",
+    API_URL: "http://openlibrary.org/trending/daily.json?limit=20",
   });
 
   const [activeBookCard, setActiveBookCard] = useState<string | undefined>();
@@ -23,8 +23,8 @@ const TrendingBooks: React.FC = () => {
   }, [data, activeBookCard]);
 
   return (
-    <div className="flex w-full">
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 my-5 xl:max-h-[50rem]">
+    <div className="flex lg:ml-[15rem]">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-5 flex-1">
         {data ? (
           <>
             {data.works.map((book) => (
@@ -51,8 +51,7 @@ const TrendingBooks: React.FC = () => {
           </>
         )}
       </div>
-
-      <div className="w-96">
+      <div className="hidden lg:block lg:w-[25rem]">
         <DetailsPanel
           activeBook={activeBookCard}
           book={

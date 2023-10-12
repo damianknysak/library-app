@@ -3,7 +3,7 @@ import { useBookDetailedFetch } from "../../hooks/useBookDetailedFetch";
 import { TrendingBook } from "./TrendingBookCard";
 import Skeleton from "react-loading-skeleton";
 import { Rating } from "react-simple-star-rating";
-import ShowMoreText from "react-show-more-text";
+import { shortenString } from "../../utils/StringUtils";
 
 export interface SummaryRatingProps {
   average: number;
@@ -26,81 +26,85 @@ interface DetailedPanelProps {
 }
 
 const DetailsPanel: React.FC<DetailedPanelProps> = ({ activeBook, book }) => {
-  const { data } = useBookDetailedFetch({ WORKS_KEY: activeBook });
+  const { data, pending } = useBookDetailedFetch({ WORKS_KEY: activeBook });
+  const [detailsBookInfo, setDetailsBookInfo] = useState<
+    DetailedBookProps | undefined
+  >();
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsImageLoaded(false);
-    console.log(JSON.stringify(data));
-  }, [data]);
+    if (pending) {
+      setDetailsBookInfo(undefined);
+      setIsImageLoaded(false);
+    } else {
+      setDetailsBookInfo(data);
+    }
+  }, [pending]);
 
   return (
-    <div className="hidden xl:flex flex-col items-center space-y-4 pt-10 min-w-[20rem] ml-10 p-2 bg-red-900">
-      <span className="text-white text-lg font-bold text-center">
-        {book?.title || <Skeleton height={30} width={230} />}
-      </span>
-      {!isImageLoaded && <Skeleton width={160} height={240} />}
-      {activeBook && book && (
-        <div
-          className={`w-40 h-60 rounded-xl bg-black/50 backdrop-blur-md ${
-            !isImageLoaded && "hidden"
-          }`}
-        >
-          <img
-            className={`w-40 h-60 object-contain border-2 ${
+    <aside className="lg:fixed right-0 top-15 w-[25rem]">
+      <div className="mx-10 hidden lg:flex flex-col items-center space-y-4 p-14 bg-[--primary] h-[50rem]">
+        <span className="text-white text-lg font-bold text-center">
+          {book?.title || <Skeleton height={30} width={230} />}
+        </span>
+        {!isImageLoaded && <Skeleton width={160} height={240} />}
+        {activeBook && book && detailsBookInfo && (
+          <div
+            className={`w-40 h-60 rounded-xl bg-black/50 backdrop-blur-md ${
               !isImageLoaded && "hidden"
-            }  rounded-xl`}
-            src={`https://covers.openlibrary.org/b/id/${data?.covers[0]}-L.jpg`}
-            alt={data?.title}
-            onLoad={() => {
-              setIsImageLoaded(true);
-            }}
-          />
-        </div>
-      )}
+            }`}
+          >
+            <img
+              className={`w-40 h-60 object-contain border-2 ${
+                !isImageLoaded && "hidden"
+              }  rounded-xl`}
+              src={`https://covers.openlibrary.org/b/id/${detailsBookInfo?.covers[0]}-L.jpg`}
+              alt={detailsBookInfo?.title}
+              onLoad={() => {
+                setIsImageLoaded(true);
+              }}
+            />
+          </div>
+        )}
 
-      {book ? (
-        <div className="flex items-center space-x-5 text-white font-bold">
-          <span>{book.author_name.join(", ")}</span>
-          <span>{book.first_publish_year}</span>
-        </div>
-      ) : (
-        <Skeleton height={20} width={150} />
-      )}
+        {book ? (
+          <div className="flex items-center space-x-5 text-white font-bold">
+            <span>{book.author_name.join(", ")}</span>
+            <span>{book.first_publish_year}</span>
+          </div>
+        ) : (
+          <Skeleton height={20} width={180} />
+        )}
 
-      {book ? (
-        <div className="text-white flex space-x-2 items-center">
-          <Rating
-            className="mb-1"
-            allowFraction
-            size={20}
-            initialValue={data?.ratings.average}
-          />
+        {detailsBookInfo ? (
+          <div className="text-white flex space-x-2 items-center">
+            <Rating
+              readonly
+              className="mb-1"
+              allowFraction
+              size={20}
+              initialValue={detailsBookInfo?.ratings.average}
+            />
 
-          <span>{data?.ratings.average.toFixed(2)}</span>
-        </div>
-      ) : (
-        <Skeleton height={20} width={100} />
-      )}
+            <span>{detailsBookInfo?.ratings.average.toFixed(2)}</span>
+          </div>
+        ) : (
+          <Skeleton height={20} width={120} />
+        )}
 
-      {data ? (
-        <ShowMoreText
-          /* Default options */
-          lines={3}
-          more="Show more"
-          less="Show less"
-          className="content-css"
-          anchorClass="show-more-less-clickable"
-          expanded={false}
-          width={280}
-          truncatedEndingComponent={"... "}
-        >
-          {data.description}
-        </ShowMoreText>
-      ) : (
-        <Skeleton height={20} width={100} />
-      )}
-    </div>
+        {detailsBookInfo ? (
+          <span className="text-white">
+            {shortenString(detailsBookInfo.description, 20).text}{" "}
+          </span>
+        ) : (
+          <Skeleton height={20} width={200} count={3} />
+        )}
+
+        <button className=" bg-[--secondary] p-3 px-10 text-white font-bold rounded-xl">
+          <span>Pokaż więcej</span>
+        </button>
+      </div>
+    </aside>
   );
 };
 
