@@ -41,6 +41,13 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({ activeBook, book }) => {
     }
   }, [pending]);
 
+  useEffect(() => {
+    if (detailsBookInfo) {
+      if (!detailsBookInfo.covers && detailsBookInfo.title) {
+        setIsImageLoaded(true);
+      }
+    }
+  }, [detailsBookInfo]);
   return (
     <aside className="lg:fixed right-0 top-15 w-[25rem]">
       <div className="mx-10 hidden lg:flex flex-col items-center space-y-4 p-14 bg-[--primary] h-[50rem]">
@@ -54,16 +61,22 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({ activeBook, book }) => {
               !isImageLoaded && "hidden"
             }`}
           >
-            <img
-              className={`w-40 h-60 object-contain border-2 ${
-                !isImageLoaded && "hidden"
-              }  rounded-xl`}
-              src={`https://covers.openlibrary.org/b/id/${detailsBookInfo?.covers[0]}-L.jpg`}
-              alt={detailsBookInfo?.title}
-              onLoad={() => {
-                setIsImageLoaded(true);
-              }}
-            />
+            {detailsBookInfo.covers ? (
+              <img
+                className={`w-40 h-60 object-contain border-2 ${
+                  !isImageLoaded && "hidden"
+                }  rounded-xl`}
+                src={`https://covers.openlibrary.org/b/id/${detailsBookInfo?.covers[0]}-L.jpg`}
+                alt={detailsBookInfo?.title}
+                onLoad={() => {
+                  setIsImageLoaded(true);
+                }}
+              />
+            ) : (
+              <div className="w-40 h-60 border-2 rounded-xl flex items-center justify-center">
+                <span className="text-white">Brak okładki</span>
+              </div>
+            )}
           </div>
         )}
 

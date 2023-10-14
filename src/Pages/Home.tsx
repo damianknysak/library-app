@@ -3,37 +3,46 @@ import TrendingBooks from "../components/Home/TrendingBooks";
 import DetailsPanel from "../components/Home/DetailsPanel";
 import { useTrendingBookFetch } from "../hooks/useTrendingBookFetch";
 import { TrendingBook } from "../components/Home/TrendingBookCard";
+import RecommendedBooks from "../components/Home/RecommendedBooks";
 export interface TrendingBooksArray {
   works: TrendingBook[];
 }
 
 const Home: React.FC = () => {
-  const { data } = useTrendingBookFetch({
+  const { data: trendingBooksData } = useTrendingBookFetch({
     API_URL: "http://openlibrary.org/trending/daily.json?limit=20",
   });
 
   const [activeBookCard, setActiveBookCard] = useState<string | undefined>();
 
   useEffect(() => {
-    if (data && !activeBookCard) {
-      setActiveBookCard(data?.works[0].key);
+    if (trendingBooksData && !activeBookCard) {
+      setActiveBookCard(trendingBooksData?.works[0].key);
     }
-  }, [data, activeBookCard]);
+  }, [trendingBooksData, activeBookCard]);
 
   return (
     <div className="w-full">
       <div className="flex lg:ml-[15rem]">
-        <TrendingBooks
-          data={data}
-          activeBookCard={activeBookCard}
-          setActiveBookCard={setActiveBookCard}
-        />
-        <div className="hidden lg:block lg:w-[25rem]">
+        <div className="flex flex-col w-full">
+          <RecommendedBooks
+            activeBookCard={activeBookCard}
+            setActiveBookCard={setActiveBookCard}
+          />
+
+          <TrendingBooks
+            data={trendingBooksData}
+            activeBookCard={activeBookCard}
+            setActiveBookCard={setActiveBookCard}
+          />
+        </div>
+
+        <div className="hidden lg:block lg:min-w-[25rem]">
           <DetailsPanel
             activeBook={activeBookCard}
             book={
-              data
-                ? data?.works.find(
+              trendingBooksData
+                ? trendingBooksData?.works.find(
                     (book: TrendingBook) => book.key === activeBookCard
                   )
                 : undefined
