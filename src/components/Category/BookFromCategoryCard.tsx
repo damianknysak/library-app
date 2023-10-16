@@ -1,47 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { CategoryBook } from "../../hooks/useCategoryBookWorkFetch";
 
-export interface TrendingBook {
-  key: string;
-  title: string;
-  edition_count: number;
-  first_publish_year: number;
-  has_fulltext: boolean;
-  public_scan_b: boolean;
-  cover_edition_key: string;
-  cover_i: number;
-  language: string[];
-  author_key: string[];
-  author_name: string[];
-}
-
-interface TrendingBookCardProps {
-  book: TrendingBook | undefined;
+interface BookFromCategoryCardProps {
+  book: CategoryBook | undefined;
   activeBookCard: string | undefined;
   setActiveBookCard:
     | React.Dispatch<React.SetStateAction<string | undefined>>
     | undefined;
 }
 
-const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
+const BookFromCategoryCard: React.FC<BookFromCategoryCardProps> = ({
   book,
   activeBookCard,
   setActiveBookCard,
 }) => {
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
   const [imageError, setImageError] = useState<boolean>(false);
-  useEffect(() => {
-    if (book) {
-      if (!book.cover_edition_key && !book.cover_i && book.title) {
-        setIsImageLoaded(true);
-      }
-    }
-  }, [book]);
-
-  useEffect(() => {
-    console.log(imageError);
-  }, [imageError]);
   return (
     <div
       onClick={() => {
@@ -109,23 +85,17 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
           )}
         </span>
         <div className="text-sm">
-          {!book?.first_publish_year || !book.author_name ? (
-            <>
-              {!book ? (
-                <Skeleton
-                  height={20}
-                  width={100}
-                  baseColor="white"
-                  highlightColor="gray"
-                />
-              ) : (
-                <span>Brak informacji</span>
-              )}
-            </>
+          {!book ? (
+            <Skeleton
+              height={20}
+              width={100}
+              baseColor="white"
+              highlightColor="gray"
+            />
           ) : (
             <>
-              <span>{book?.author_name.join(", ")}</span>
-              <span> &middot; {book?.first_publish_year}</span>
+              <span>{book?.authors[0].name || "Brak autora"}</span>
+              <span> &middot; {book?.first_publish_year || "Brak daty"}</span>
             </>
           )}
         </div>
@@ -134,4 +104,4 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
   );
 };
 
-export default TrendingBookCard;
+export default BookFromCategoryCard;

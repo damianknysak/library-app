@@ -4,6 +4,7 @@ import { TrendingBook } from "./TrendingBookCard";
 import Skeleton from "react-loading-skeleton";
 import { Rating } from "react-simple-star-rating";
 import { shortenString } from "../../utils/StringUtils";
+import { CategoryBook } from "../../hooks/useCategoryBookWorkFetch";
 
 export interface SummaryRatingProps {
   average: number;
@@ -23,9 +24,14 @@ export interface DetailedBookProps {
 interface DetailedPanelProps {
   activeBook: string | undefined;
   book: TrendingBook | undefined;
+  categoryBook: CategoryBook | undefined;
 }
 
-const DetailsPanel: React.FC<DetailedPanelProps> = ({ activeBook, book }) => {
+const DetailsPanel: React.FC<DetailedPanelProps> = ({
+  activeBook,
+  book,
+  categoryBook,
+}) => {
   const { data, pending } = useBookDetailedFetch({ WORKS_KEY: activeBook });
   const [detailsBookInfo, setDetailsBookInfo] = useState<
     DetailedBookProps | undefined
@@ -48,14 +54,17 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({ activeBook, book }) => {
       }
     }
   }, [detailsBookInfo]);
+
   return (
     <aside className="lg:fixed right-0 top-15 w-[25rem]">
       <div className="mx-10 hidden lg:flex flex-col items-center space-y-4 p-14 bg-[--primary] h-[50rem]">
         <span className="text-white text-lg font-bold text-center">
-          {book?.title || <Skeleton height={30} width={230} />}
+          {book?.title || categoryBook?.title || (
+            <Skeleton height={30} width={230} />
+          )}
         </span>
         {!isImageLoaded && <Skeleton width={160} height={240} />}
-        {activeBook && book && detailsBookInfo && (
+        {activeBook && (book || categoryBook) && detailsBookInfo && (
           <div
             className={`w-40 h-60 rounded-xl bg-black/50 backdrop-blur-md ${
               !isImageLoaded && "hidden"
@@ -80,10 +89,18 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({ activeBook, book }) => {
           </div>
         )}
 
-        {book ? (
+        {book || categoryBook ? (
           <div className="flex items-center space-x-5 text-white font-bold">
-            <span>{book.author_name.join(", ")}</span>
-            <span>{book.first_publish_year}</span>
+            <span>
+              {book
+                ? book.author_name.join(", ")
+                : categoryBook?.authors[0].name}
+            </span>
+            <span>
+              {book
+                ? book?.first_publish_year
+                : categoryBook?.first_publish_year}
+            </span>
           </div>
         ) : (
           <Skeleton height={20} width={180} />
@@ -99,7 +116,10 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({ activeBook, book }) => {
               initialValue={detailsBookInfo?.ratings.average}
             />
 
-            <span>{detailsBookInfo?.ratings.average.toFixed(2)}</span>
+            <span>
+              {detailsBookInfo?.ratings.average &&
+                detailsBookInfo?.ratings.average.toFixed(2)}
+            </span>
           </div>
         ) : (
           <Skeleton height={20} width={120} />

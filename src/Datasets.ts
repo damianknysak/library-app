@@ -11,11 +11,11 @@ export const BOOKS_CATEGORIES_DATASET = [
   {name: "Sztuka", subject: "arts"},
   {name: "Zwierzęta", subject: "animals"},
   {name: "Fikcja", subject: "fiction"},
-  {name: "Nauka i matematyka", subject: "sciencemathematics"},
-  {name: "Biznes i finanse", subject: "business"},
+  {name: "Nauka", subject: "sciencemathematics"},
+  {name: "Biznes", subject: "business"},
   {name: "Młodzieżowe", subject: "juvenile_fiction"},
   {name: "Historia", subject: "history"},
-  {name: "Zdrowie i sport", subject: "exercise"},
+  {name: "Zdrowie", subject: "exercise"},
   {name: "Biografie", subject: "biography"},
-  
+  {name: "Religia", subject: "religion"}
 ]

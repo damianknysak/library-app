@@ -48,12 +48,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
                 ? "Stwórz swoje konto"
                 : "Zaloguj się do nas"}
             </span>
-            <form
-              id="authForm"
-              onSubmit={() => {
-                console.log("submit");
-              }}
-            >
+            <form>
               <div className="flex items-center w-80 h-12 space-x-1 border-2 text-lg border-gray-300 rounded-lg py-2 px-5 my-1.5">
                 <input
                   required
