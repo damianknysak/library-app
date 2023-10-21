@@ -35,7 +35,7 @@ const Category: React.FC = () => {
   return (
     <div className="w-full">
       <div className="flex lg:ml-[15rem]">
-        <div className="flex flex-col w-full space-y-10">
+        <main className="flex flex-col w-full space-y-10">
           <Categories activeCategory={subject!} />
           {subject && (
             <BooksFromCategories
@@ -45,9 +45,9 @@ const Category: React.FC = () => {
               categorySubject={subject}
             />
           )}
-        </div>
+        </main>
 
-        <div className="hidden lg:block lg:min-w-[25rem]">
+        <aside className="hidden lg:block lg:min-w-[25rem]">
           <DetailsPanel
             activeBook={activeBookCard}
             book={undefined}
@@ -59,7 +59,7 @@ const Category: React.FC = () => {
                 : undefined
             }
           />
-        </div>
+        </aside>
       </div>
     </div>
   );

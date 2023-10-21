@@ -7,6 +7,11 @@ import RecommendedBooks from "../components/Home/RecommendedBooks";
 import SearchResults from "../components/Home/SearchResults";
 import { useLocation } from "react-router-dom";
 import { useSearchFetch } from "../hooks/useSearchFetch";
+import { useSelector } from "react-redux";
+import {
+  selectCurrentToken,
+  selectCurrentUser,
+} from "../features/auth/authSlice";
 export interface TrendingBooksArray {
   works: TrendingBook[];
 }
@@ -27,7 +32,6 @@ const Home: React.FC = () => {
       activeBookCard &&
       trendingBooksData &&
       !trendingBooksData?.works.find((book) => book.key === activeBookCard);
-    console.log(`isDetailPanelFromSearch ${isDetailPanelFromSearch}`);
     if ((trendingBooksData && !activeBookCard) || isDetailPanelFromSearch) {
       setActiveBookCard(trendingBooksData?.works[0].key);
     }
@@ -37,10 +41,14 @@ const Home: React.FC = () => {
     ...(trendingBooksData?.works || []),
     ...(searchResultsData?.docs || []),
   ];
+
+  const user = useSelector(selectCurrentUser);
+
   return (
     <div className="w-full">
       <div className="flex lg:ml-[15rem]">
-        <div className="flex flex-col w-full">
+        <main className="flex flex-col w-full">
+          {user && <span>Hello world</span>}
           {search ? (
             <SearchResults
               data={searchResultsData}
@@ -61,9 +69,9 @@ const Home: React.FC = () => {
               />
             </>
           )}
-        </div>
+        </main>
 
-        <div className="hidden lg:block lg:min-w-[25rem]">
+        <aside className="hidden lg:block lg:min-w-[25rem]">
           <DetailsPanel
             activeBook={activeBookCard}
             book={
@@ -81,7 +89,7 @@ const Home: React.FC = () => {
             }
             categoryBook={undefined}
           />
-        </div>
+        </aside>
       </div>
     </div>
   );

@@ -39,9 +39,6 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
     }
   }, [book]);
 
-  useEffect(() => {
-    console.log(imageError);
-  }, [imageError]);
   return (
     <div
       onClick={() => {

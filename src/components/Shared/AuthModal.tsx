@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { BiLock, BiLockOpen, BiMailSend, BiSolidBookAlt } from "react-icons/bi";
+import React from "react";
+import { BiSolidBookAlt } from "react-icons/bi";
+import AuthForm from "./AuthForm";
 
 interface AuthModalProps {
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,7 +13,6 @@ const AuthModal: React.FC<AuthModalProps> = ({
   type,
   setAuthType,
 }) => {
-  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   return (
     <div
       onClick={(event) => {
@@ -22,7 +22,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
       className={`absolute left-0 right-0 bottom-0 top-0 h-screen w-screen flex items-center justify-center bg-black/50`}
     >
       <div className="flex flex-col p-10 md:flex-row md:w-[60rem] md:h-[40rem] items-center justify-center bg-white rounded-lg">
-        <div className="my-10 md:my-0 bg-[--primary] h-[39rem] mx-2 rounded-xl flex-1 flex items-center justify-center">
+        <div className="my-10 hidden md:flex md:my-0 bg-[--primary] h-[39rem] mx-2 rounded-xl flex-1  items-center justify-center">
           <img
             alt="books."
             className="w-40 md:w-80"
@@ -48,47 +48,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
                 ? "Stwórz swoje konto"
                 : "Zaloguj się do nas"}
             </span>
-            <form>
-              <div className="flex items-center w-80 h-12 space-x-1 border-2 text-lg border-gray-300 rounded-lg py-2 px-5 my-1.5">
-                <input
-                  required
-                  className="outline-none w-64"
-                  type="text"
-                  placeholder="Wpisz swój email ..."
-                />
-                <div>
-                  <BiMailSend size={24} />
-                </div>
-              </div>
-              <div className="flex items-center w-80 h-12 space-x-1 border-2 text-lg border-gray-300 rounded-lg py-2 px-5 my-1.5">
-                <input
-                  required
-                  className="outline-none w-64"
-                  type={isPasswordHidden ? "password" : "text"}
-                  placeholder="Wpisz swoje hasło ..."
-                />
-                <div
-                  onClick={() => {
-                    setIsPasswordHidden(!isPasswordHidden);
-                  }}
-                >
-                  {isPasswordHidden ? (
-                    <BiLock size={24} />
-                  ) : (
-                    <BiLockOpen size={24} />
-                  )}
-                </div>
-              </div>
-              <button
-                form="#authForm"
-                type="submit"
-                className="bg-[--primary] w-80 h-12 rounded-lg mt-8"
-              >
-                <span className="text-white">
-                  {type === "register" ? "Zarejestruj się" : "Zaloguj się"}
-                </span>
-              </button>
-            </form>
+            <AuthForm type={type} />
             <div className="text-center text-sm mt-3">
               <span className="text-gray-500">
                 {type === "register"
