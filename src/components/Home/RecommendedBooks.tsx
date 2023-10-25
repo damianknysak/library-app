@@ -1,4 +1,5 @@
 import React from "react";
+import { useSearchParams } from "react-router-dom";
 
 interface RecommendedBooksProps {
   activeBookCard: string | undefined;
@@ -9,6 +10,7 @@ const RecommendedBooks: React.FC<RecommendedBooksProps> = ({
   activeBookCard,
   setActiveBookCard,
 }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   return (
     <div className="flex flex-col w-full">
       <div className="my-5">
@@ -21,7 +23,12 @@ const RecommendedBooks: React.FC<RecommendedBooksProps> = ({
             Rekomendacje książek tylko dla Ciebie! Zarejestruj się by mieć do
             nich dostęp.
           </span>
-          <button className="my-5 w-36 h-10 bg-[--secondary] rounded-xl">
+          <button
+            onClick={() => {
+              setSearchParams({ authorize: "register" });
+            }}
+            className="my-5 w-36 h-10 bg-[--secondary] rounded-xl"
+          >
             <span className="text-white font-bold">Dołącz do nas</span>
           </button>
         </div>

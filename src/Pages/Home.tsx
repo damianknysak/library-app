@@ -8,10 +8,7 @@ import SearchResults from "../components/Home/SearchResults";
 import { useLocation } from "react-router-dom";
 import { useSearchFetch } from "../hooks/useSearchFetch";
 import { useSelector } from "react-redux";
-import {
-  selectCurrentToken,
-  selectCurrentUser,
-} from "../features/auth/authSlice";
+import { AuthState, selectCurrentUser } from "../features/auth/authSlice";
 export interface TrendingBooksArray {
   works: TrendingBook[];
 }
@@ -43,12 +40,10 @@ const Home: React.FC = () => {
   ];
 
   const user = useSelector(selectCurrentUser);
-
   return (
     <div className="w-full">
       <div className="flex lg:ml-[15rem]">
         <main className="flex flex-col w-full">
-          {user && <span>Hello world</span>}
           {search ? (
             <SearchResults
               data={searchResultsData}

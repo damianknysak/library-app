@@ -5,7 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import { Rating } from "react-simple-star-rating";
 import { shortenString } from "../../utils/StringUtils";
 import { CategoryBook } from "../../hooks/useCategoryBookWorkFetch";
-
+import LikeButton from "../Shared/LikeButton";
 export interface SummaryRatingProps {
   average: number;
   count: number;
@@ -136,6 +136,7 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
         <button className=" bg-[--secondary] p-3 px-10 text-white font-bold rounded-xl">
           <span>Pokaż więcej</span>
         </button>
+        {book && <LikeButton bookId={book!.key} />}
       </div>
     </aside>
   );

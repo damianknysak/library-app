@@ -6,6 +6,7 @@ import {
 } from "../../features/auth/authApiSlice";
 import { setCredentials } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 interface AuthModalProps {
   type: string;
@@ -21,6 +22,7 @@ const AuthForm: React.FC<AuthModalProps> = ({ type }) => {
   const [pwd, setPwd] = useState<string>("");
   const [errMsg, setErrMsg] = useState<string>("");
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const handleAuth = async () => {
     try {
       if (type === "login") {
@@ -42,6 +44,7 @@ const AuthForm: React.FC<AuthModalProps> = ({ type }) => {
       setPwd("");
       setEmail("");
       setErrMsg("");
+      setSearchParams(new URLSearchParams());
     } catch (error: any) {
       if (!error) {
         setErrMsg("Brak odpowiedzi serwera.");

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { BiSolidBookAlt, BiUserCheck, BiUserPlus } from "react-icons/bi";
 import SearchBar from "./SearchBar";
 import HamburgerButton from "./HamburgerButton";
-import { Link } from "react-router-dom";
-import AuthModal from "./AuthModal";
+import { Link, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../features/auth/authSlice";
+import { BASE_API_URL } from "../../app/api/apiSlice";
 
 const HorizontalHeader: React.FC = () => {
-  const [isAuthModalActive, setIsAuthModalActive] = useState<boolean>(false);
-  const [authType, setAuthType] = useState("register");
+  const user = useSelector(selectCurrentUser);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <header className="w-full p-10 h-28 fixed top-0 left-0 right-0 flex justify-between items-center backdrop-blur-xl bg-white/30 z-10">
       <div className="flex items-center justify-center">
@@ -26,34 +29,38 @@ const HorizontalHeader: React.FC = () => {
         <HamburgerButton />
       </div>
       <div className="hidden w-[20rem] lg:flex items-center justify-between font-bold space-x-5">
-        <button
-          onClick={() => {
-            setIsAuthModalActive(true);
-            setAuthType("login");
-          }}
-          className="flex-1 h-14 bg-[--primary] rounded-xl flex space-x-2 items-center justify-center"
-        >
-          <span className="text-white">Zaloguj się</span>
-          <BiUserCheck size={30} color="white" />
-        </button>
-        <button
-          onClick={() => {
-            setIsAuthModalActive(true);
-            setAuthType("register");
-          }}
-          className="flex-1 h-14 border-2 border-[--primary] rounded-xl flex space-x-2 items-center justify-center"
-        >
-          <span className="text-[--primary]">Rejestracja</span>
-          <BiUserPlus size={30} color="var(--primary)" />
-        </button>
+        {user ? (
+          <div className="flex items-center space-x-2">
+            <img
+              className="w-14 h-14 rounded-full"
+              src={`${BASE_API_URL}/${user.profileImage}`}
+              alt=""
+            />
+            <span>{user.firstName + " " + user.lastName}</span>
+          </div>
+        ) : (
+          <>
+            <button
+              onClick={() => {
+                setSearchParams({ authorize: "login" });
+              }}
+              className="flex-1 h-14 bg-[--primary] rounded-xl flex space-x-2 items-center justify-center"
+            >
+              <span className="text-white">Zaloguj się</span>
+              <BiUserCheck size={30} color="white" />
+            </button>
+            <button
+              onClick={() => {
+                setSearchParams({ authorize: "register" });
+              }}
+              className="flex-1 h-14 border-2 border-[--primary] rounded-xl flex space-x-2 items-center justify-center"
+            >
+              <span className="text-[--primary]">Rejestracja</span>
+              <BiUserPlus size={30} color="var(--primary)" />
+            </button>
+          </>
+        )}
       </div>
-      {isAuthModalActive && (
-        <AuthModal
-          setIsActive={setIsAuthModalActive}
-          type={authType}
-          setAuthType={setAuthType}
-        />
-      )}
     </header>
   );
 };

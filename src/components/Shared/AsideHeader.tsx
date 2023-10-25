@@ -4,14 +4,18 @@ import {
   BiHeartCircle,
   BiHelpCircle,
   BiLibrary,
+  BiLogOut,
   BiSolidHome,
+  BiUserCircle,
 } from "react-icons/bi";
-import { FiSettings } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { logOut, selectCurrentUser } from "../../features/auth/authSlice";
 
 const AsideHeader: React.FC = () => {
   const location = useLocation();
-
+  const user = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
   return (
     <div className="lg:fixed left-0 top-15 w-[15rem]">
       <aside className="lg:flex hidden flex-col justify-center items-center mt-20 min-w-[15rem]">
@@ -99,26 +103,24 @@ const AsideHeader: React.FC = () => {
             </div>
           </Link>
           <hr className="border-1"></hr>
-          <Link to="/settings">
+          <Link to="/profile">
             <div
               className={`${
-                location.pathname === "/settings"
+                location.pathname === "/profile"
                   ? "text-black"
                   : "text-gray-400"
               } flex items-center space-x-3`}
             >
-              <FiSettings
+              <BiUserCircle
                 className={`${
-                  location.pathname === "/settings"
+                  location.pathname === "/profile"
                     ? "bg-[--primary]"
                     : "bg-gray-300"
                 } rounded p-0.5`}
                 size={20}
-                color={`${
-                  location.pathname === "/settings" ? "white" : "gray"
-                }`}
+                color={`${location.pathname === "/profile" ? "white" : "gray"}`}
               />
-              <span>Ustawienia</span>
+              <span>Profil</span>
             </div>
           </Link>
           <Link to="/help">
@@ -139,6 +141,23 @@ const AsideHeader: React.FC = () => {
               <span>Pomoc</span>
             </div>
           </Link>
+          {user && (
+            <Link
+              onClick={() => {
+                dispatch(logOut());
+              }}
+              to="/"
+            >
+              <div className={`text-gray-400 flex items-center space-x-3`}>
+                <BiLogOut
+                  className={`bg-gray-300 rounded p-0.5`}
+                  size={20}
+                  color={`gray`}
+                />
+                <span>Wyloguj</span>
+              </div>
+            </Link>
+          )}
         </div>
       </aside>
     </div>
