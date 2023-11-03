@@ -75,7 +75,7 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
                 className={`w-40 h-60 object-contain border-2 ${
                   !isImageLoaded && "hidden"
                 }  rounded-xl`}
-                src={`https://covers.openlibrary.org/b/id/${detailsBookInfo?.covers[0]}-L.jpg`}
+                src={`https://covers.openlibrary.org/b/id/${detailsBookInfo?.covers[0]}-M.jpg`}
                 alt={detailsBookInfo?.title}
                 onLoad={() => {
                   setIsImageLoaded(true);
@@ -133,10 +133,10 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
           <Skeleton height={20} width={200} count={3} />
         )}
 
-        <button className=" bg-[--secondary] p-3 px-10 text-white font-bold rounded-xl">
+        <button className="border bg-[--secondary] p-3 px-10 text-white font-bold rounded-xl">
           <span>Pokaż więcej</span>
         </button>
-        {book && <LikeButton bookId={book!.key} />}
+        {book && <LikeButton bookUrl={book!.key} />}
       </div>
     </aside>
   );
