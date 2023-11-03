@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import { useSearchFetch } from "../hooks/useSearchFetch";
 import { useSelector } from "react-redux";
 import { AuthState, selectCurrentUser } from "../features/auth/authSlice";
+import BookDetailsModal from "../components/Shared/BookDetailsModal";
 export interface TrendingBooksArray {
   works: TrendingBook[];
 }
@@ -42,6 +43,7 @@ const Home: React.FC = () => {
   const user = useSelector(selectCurrentUser);
   return (
     <div className="w-full">
+      <BookDetailsModal />
       <div className="flex lg:ml-[15rem]">
         <main className="flex flex-col w-full">
           {search ? (

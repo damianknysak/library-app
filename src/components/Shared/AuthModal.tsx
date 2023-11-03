@@ -10,14 +10,19 @@ const AuthModal: React.FC = ({}) => {
   const isActive =
     authorize === "login" || authorize === "register" ? true : false;
 
+  const handleCloseModal = () => {
+    const currentParams = new URLSearchParams(searchParams.toString());
+    currentParams.delete("authorize");
+    setSearchParams(currentParams);
+  };
+
   return (
     <>
       {isActive && (
         <div
           onClick={(event) => {
             event.preventDefault();
-            if (event.currentTarget === event.target)
-              setSearchParams(new URLSearchParams());
+            if (event.currentTarget === event.target) handleCloseModal();
           }}
           className={`absolute left-0 right-0 bottom-0 top-0 h-screen w-screen flex items-center justify-center bg-black/50 z-50`}
         >

@@ -6,6 +6,7 @@ import { Rating } from "react-simple-star-rating";
 import { shortenString } from "../../utils/StringUtils";
 import { CategoryBook } from "../../hooks/useCategoryBookWorkFetch";
 import LikeButton from "../Shared/LikeButton";
+import { useLocation, useSearchParams } from "react-router-dom";
 export interface SummaryRatingProps {
   average: number;
   count: number;
@@ -37,7 +38,8 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
     DetailedBookProps | undefined
   >();
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
-
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     if (pending) {
       setDetailsBookInfo(undefined);
@@ -54,6 +56,10 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
       }
     }
   }, [detailsBookInfo]);
+
+  const handleShowMore = () => {
+    setSearchParams({ BookDetailsId: activeBook! });
+  };
 
   return (
     <aside className="lg:fixed right-0 top-15 w-[25rem]">
@@ -133,7 +139,10 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
           <Skeleton height={20} width={200} count={3} />
         )}
 
-        <button className="border bg-[--secondary] p-3 px-10 text-white font-bold rounded-xl">
+        <button
+          onClick={handleShowMore}
+          className="border bg-[--secondary] p-3 px-10 text-white font-bold rounded-xl"
+        >
           <span>Pokaż więcej</span>
         </button>
         {book && <LikeButton bookUrl={book!.key} />}
