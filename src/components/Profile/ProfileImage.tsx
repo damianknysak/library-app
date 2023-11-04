@@ -14,7 +14,6 @@ const ProfileImage = () => {
     inputRef!.current!.click();
   };
   const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files);
     setImage(URL.createObjectURL(e!.target!.files![0]));
   };
   return (

@@ -25,7 +25,8 @@ const RecommendedBooks: React.FC<RecommendedBooksProps> = ({
           </span>
           <button
             onClick={() => {
-              setSearchParams({ authorize: "register" });
+              searchParams.set("authorize", "register");
+              setSearchParams(searchParams);
             }}
             className="my-5 w-36 h-10 bg-[--secondary] rounded-xl"
           >

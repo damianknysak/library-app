@@ -7,9 +7,10 @@ import RecommendedBooks from "../components/Home/RecommendedBooks";
 import SearchResults from "../components/Home/SearchResults";
 import { useLocation } from "react-router-dom";
 import { useSearchFetch } from "../hooks/useSearchFetch";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthState, selectCurrentUser } from "../features/auth/authSlice";
 import BookDetailsModal from "../components/Shared/BookDetailsModal";
+import { setCurrentBook } from "../features/books/bookSlice";
 export interface TrendingBooksArray {
   works: TrendingBook[];
 }
@@ -23,7 +24,6 @@ const Home: React.FC = () => {
   const search = searchParams.get("search") ? searchParams.get("search") : "";
   const [activeBookCard, setActiveBookCard] = useState<string | undefined>();
   const { data: searchResultsData } = useSearchFetch();
-
   useEffect(() => {
     const isDetailPanelFromSearch =
       !search &&
@@ -40,7 +40,6 @@ const Home: React.FC = () => {
     ...(searchResultsData?.docs || []),
   ];
 
-  const user = useSelector(selectCurrentUser);
   return (
     <div className="w-full">
       <BookDetailsModal />

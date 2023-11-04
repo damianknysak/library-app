@@ -46,9 +46,6 @@ export const likedBooksSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${token}`,
         },
       }),
-      onQueryStarted: () => {
-        console.log("Startuje check");
-      },
     }),
   }),
 });

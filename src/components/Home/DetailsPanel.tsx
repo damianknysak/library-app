@@ -7,6 +7,8 @@ import { shortenString } from "../../utils/StringUtils";
 import { CategoryBook } from "../../hooks/useCategoryBookWorkFetch";
 import LikeButton from "../Shared/LikeButton";
 import { useLocation, useSearchParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentBook } from "../../features/books/bookSlice";
 export interface SummaryRatingProps {
   average: number;
   count: number;
@@ -38,8 +40,9 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
     DetailedBookProps | undefined
   >();
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
-  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (pending) {
       setDetailsBookInfo(undefined);
@@ -57,8 +60,14 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
     }
   }, [detailsBookInfo]);
 
+  useEffect(() => {
+    data && dispatch(setCurrentBook(data));
+  }, [data]);
+
   const handleShowMore = () => {
-    setSearchParams({ BookDetailsId: activeBook! });
+    searchParams.set("BookDetailsId", activeBook!);
+
+    setSearchParams(searchParams);
   };
 
   return (
@@ -145,7 +154,7 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
         >
           <span>Pokaż więcej</span>
         </button>
-        {book && <LikeButton bookUrl={book!.key} />}
+        {detailsBookInfo && <LikeButton bookUrl={detailsBookInfo!.key} />}
       </div>
     </aside>
   );

@@ -64,7 +64,8 @@ const AuthModal: React.FC = ({}) => {
                       onClick={() => {
                         const value =
                           authorize === "register" ? "login" : "register";
-                        setSearchParams({ authorize: value });
+                        searchParams.set("authorize", value);
+                        setSearchParams(searchParams);
                       }}
                       className="text-[--primary]"
                     >

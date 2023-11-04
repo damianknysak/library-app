@@ -7,10 +7,12 @@ import {
 } from "../../features/likedbooks/likedBooksSlice";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "../../features/auth/authSlice";
+import { useSearchParams } from "react-router-dom";
 
 const LikeButton: React.FC<{ bookUrl: string }> = ({ bookUrl }) => {
   const [isBookLiked, setIsBookLiked] = useState<boolean>(false);
   const token = useSelector(selectCurrentToken);
+  const [searchParams, setSearchParams] = useSearchParams();
   const { isError, isFetching, refetch } = useCheckLikeQuery({
     body: {
       bookUrl: bookUrl,
@@ -20,6 +22,10 @@ const LikeButton: React.FC<{ bookUrl: string }> = ({ bookUrl }) => {
   const [addLike] = useAddLikeMutation();
   const [removeLike] = useRemoveLikeMutation();
   const handleClick = () => {
+    if (!token) {
+      searchParams.set("authorize", "login");
+      setSearchParams(searchParams);
+    }
     if (isBookLiked) {
       setIsBookLiked(false);
       removeLike({ body: { bookUrl: bookUrl }, token: token });

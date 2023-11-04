@@ -7,6 +7,7 @@ import {
   useCategoryBookWorkFetch,
 } from "../hooks/useCategoryBookWorkFetch";
 import { useLocation, useSearchParams } from "react-router-dom";
+import BookDetailsModal from "../components/Shared/BookDetailsModal";
 
 const Category: React.FC = () => {
   const location = useLocation();
@@ -34,6 +35,7 @@ const Category: React.FC = () => {
   }, [subject, categoryBooksData]);
   return (
     <div className="w-full">
+      <BookDetailsModal />
       <div className="flex lg:ml-[15rem]">
         <main className="flex flex-col w-full space-y-10">
           <Categories activeCategory={subject!} />

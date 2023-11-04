@@ -42,7 +42,8 @@ const HorizontalHeader: React.FC = () => {
           <>
             <button
               onClick={() => {
-                setSearchParams({ authorize: "login" });
+                searchParams.set("authorize", "login");
+                setSearchParams(searchParams);
               }}
               className="flex-1 h-14 bg-[--primary] rounded-xl flex space-x-2 items-center justify-center"
             >
@@ -51,7 +52,8 @@ const HorizontalHeader: React.FC = () => {
             </button>
             <button
               onClick={() => {
-                setSearchParams({ authorize: "register" });
+                searchParams.set("authorize", "register");
+                setSearchParams(searchParams);
               }}
               className="flex-1 h-14 border-2 border-[--primary] rounded-xl flex space-x-2 items-center justify-center"
             >

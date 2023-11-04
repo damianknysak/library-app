@@ -44,7 +44,9 @@ const AuthForm: React.FC<AuthModalProps> = ({ type }) => {
       setPwd("");
       setEmail("");
       setErrMsg("");
-      setSearchParams(new URLSearchParams());
+      const currSearchParams = new URLSearchParams(searchParams);
+      currSearchParams.delete("authorize");
+      setSearchParams(currSearchParams);
     } catch (error: any) {
       if (!error) {
         setErrMsg("Brak odpowiedzi serwera.");
