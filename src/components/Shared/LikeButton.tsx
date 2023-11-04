@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BiHeartCircle } from "react-icons/bi";
+import { BiHeart, BiHeartCircle } from "react-icons/bi";
 import {
   useAddLikeMutation,
   useCheckLikeQuery,
@@ -25,6 +25,7 @@ const LikeButton: React.FC<{ bookUrl: string }> = ({ bookUrl }) => {
     if (!token) {
       searchParams.set("authorize", "login");
       setSearchParams(searchParams);
+      return;
     }
     if (isBookLiked) {
       setIsBookLiked(false);
@@ -52,18 +53,26 @@ const LikeButton: React.FC<{ bookUrl: string }> = ({ bookUrl }) => {
     refetch();
   }, [bookUrl]);
   return (
-    <button
-      onClick={handleClick}
-      className={`flex border ${
-        isBookLiked && "border-red-600"
-      } items-center space-x-2 bg-[--secondary] p-3 px-10 text-white font-bold rounded-xl`}
-    >
-      <BiHeartCircle
-        className={`${isBookLiked ? "text-red-600" : "text-white"}`}
-        size={30}
-      />
-      <span>Lubię to</span>
-    </button>
+    <>
+      <button
+        onClick={handleClick}
+        className={`flex flex-col items-center ${
+          isBookLiked && "border-red-600"
+        } `}
+      >
+        <BiHeart
+          className={`${isBookLiked ? "text-red-600" : "text-gray-500"}`}
+          size={50}
+        />
+        <span
+          className={`text-lg  ${
+            isBookLiked ? "text-red-600" : "text-gray-500"
+          }`}
+        >
+          Lubię to
+        </span>
+      </button>
+    </>
   );
 };
 

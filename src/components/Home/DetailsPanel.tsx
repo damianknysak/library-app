@@ -20,6 +20,7 @@ export interface DetailedBookProps {
   key: string;
   description: string;
   subjects: string[];
+  authors: { author: { key: string } }[];
   covers: string[];
   ratings: SummaryRatingProps;
 }
@@ -154,7 +155,6 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
         >
           <span>Pokaż więcej</span>
         </button>
-        {detailsBookInfo && <LikeButton bookUrl={detailsBookInfo!.key} />}
       </div>
     </aside>
   );

@@ -15,7 +15,6 @@ const AuthModal: React.FC = ({}) => {
     currentParams.delete("authorize");
     setSearchParams(currentParams);
   };
-
   return (
     <>
       {isActive && (
@@ -24,7 +23,7 @@ const AuthModal: React.FC = ({}) => {
             event.preventDefault();
             if (event.currentTarget === event.target) handleCloseModal();
           }}
-          className={`absolute left-0 right-0 bottom-0 top-0 h-screen w-screen flex items-center justify-center bg-black/50 z-50`}
+          className={`fixed left-0 right-0 bottom-0 top-0 h-screen w-screen flex items-center justify-center bg-black/50 z-50`}
         >
           <div className="flex flex-col p-10 md:flex-row md:w-[60rem] md:h-[40rem] items-center justify-center bg-white rounded-lg">
             <div className="my-10 hidden md:flex md:my-0 bg-[--primary] h-[39rem] mx-2 rounded-xl flex-1  items-center justify-center">

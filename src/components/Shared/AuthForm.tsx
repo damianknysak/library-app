@@ -7,6 +7,7 @@ import {
 import { setCredentials } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { useLockBodyScroll } from "@uidotdev/usehooks";
 
 interface AuthModalProps {
   type: string;
@@ -23,6 +24,8 @@ const AuthForm: React.FC<AuthModalProps> = ({ type }) => {
   const [errMsg, setErrMsg] = useState<string>("");
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
+  useLockBodyScroll();
+
   const handleAuth = async () => {
     try {
       if (type === "login") {
