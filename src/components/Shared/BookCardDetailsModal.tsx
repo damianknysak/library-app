@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { DetailedBookProps } from "../Home/DetailsPanel";
-import { BiSolidBookAlt } from "react-icons/bi";
 import { useLockBodyScroll } from "@uidotdev/usehooks";
 import Skeleton from "react-loading-skeleton";
 import LikeButton from "./LikeButton";
-import AddToLibraryButton from "./AddToLibraryButton";
 import ShareUrlButton from "./ShareUrlButton";
 import { Rating } from "react-simple-star-rating";
+import SaveInLibraryButton from "./SaveInLibraryButton";
 
 export type AuthorProps = {
   name: string;
@@ -130,7 +129,7 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
             )}
             {book ? (
               <div className="w-24 h-20 flex items-center justify-center">
-                <AddToLibraryButton bookUrl={book.key} />
+                <SaveInLibraryButton bookUrl={book.key} />
               </div>
             ) : (
               <Skeleton width={96} height={80} />
@@ -146,9 +145,10 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
           </div>
         </section>
       </div>
+      <div className="w-full border border-gray-500 my-5"></div>
       {book ? (
-        <article className="z-10 p-10 overflow-auto">
-          {book.description}
+        <article className="z-10 p-10 pt-0 overflow-auto">
+          {book.description ? book.description : "Brak opisu."}
         </article>
       ) : (
         <>

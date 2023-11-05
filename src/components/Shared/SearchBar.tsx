@@ -24,7 +24,7 @@ const SearchBar: React.FC = () => {
         <BiSearchAlt size={25} />
         <input
           ref={inputRef}
-          className="bg-gray-300 outline-none"
+          className="bg-gray-300 outline-none w-64"
           type="text"
           placeholder="Szukaj książek, autorów czy edycji ..."
           onKeyDown={handleKeyDown}
