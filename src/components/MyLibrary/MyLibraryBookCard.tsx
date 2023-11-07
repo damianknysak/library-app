@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useBookDetailedFetch } from "../../hooks/useBookDetailedFetch";
 import Skeleton from "react-loading-skeleton";
-import { Rating } from "react-simple-star-rating";
 import { AuthorProps } from "../Shared/BookCardDetailsModal";
 
-const FavoriteBookCard: React.FC<{
+const MyLibraryBookCard: React.FC<{
   bookUrl: string;
   activeBookCard: string | undefined;
   setActiveBookCard:
@@ -50,7 +49,6 @@ const FavoriteBookCard: React.FC<{
       })();
     }
   }, [book, author]);
-
   return (
     <div
       onClick={() => {
@@ -120,4 +118,5 @@ const FavoriteBookCard: React.FC<{
     </div>
   );
 };
-export default FavoriteBookCard;
+
+export default MyLibraryBookCard;

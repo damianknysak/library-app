@@ -1,9 +1,7 @@
 import { useSelector } from "react-redux";
-import { useGetBooksFromLibraryQuery } from "../features/librarybooks/libraryBooksSlice";
 import { selectCurrentToken } from "../features/auth/authSlice";
 import { useEffect, useState } from "react";
 import { useGetLikedBooksQuery } from "../features/likedbooks/likedBooksSlice";
-import FavoriteBookCard from "../components/Favorite/FavoriteBookCard";
 import DetailsPanel from "../components/Home/DetailsPanel";
 import FavoriteBooks from "../components/Favorite/FavoriteBooks";
 
@@ -23,11 +21,11 @@ const Favorite = () => {
     }
   }, [trendingBooksData, activeBookCard]);
 
-  useEffect(() => {
-    console.log(activeAuthor);
-  }, [activeAuthor]);
   return (
     <div className="w-full">
+      <div className="my-5 lg:ml-[15rem]">
+        <span className="text-2xl font-bold">Twoje ulubione</span>
+      </div>
       <div className="flex lg:ml-[15rem]">
         <main className="flex flex-col w-full">
           <FavoriteBooks

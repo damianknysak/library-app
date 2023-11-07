@@ -65,7 +65,7 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
       </div>
       <div className="flex flex-col">
         <div className="z-10 w-full flex justify-center">
-          {!isImageLoaded && (
+          {!isImageLoaded && (!book || book.covers) && (
             <Skeleton className="mt-10" width={200} height={288} />
           )}
           {book && (
@@ -82,8 +82,8 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
                   }}
                 />
               ) : (
-                <div className="w-40 h-60 border-2 rounded-xl flex items-center justify-center">
-                  <span className="text-white">Brak okładki</span>
+                <div className="w-40 h-60 backdrop-blur-md border-2 rounded-xl flex items-center justify-center">
+                  <span className="text-black">Brak okładki</span>
                 </div>
               )}
             </>

@@ -1,5 +1,18 @@
 import { apiSlice } from "../../app/api/apiSlice";
 
+export type LibraryBook = {
+  _id: string;
+  bookUrl: string;
+  userId: string;
+};
+
+export type GetLibraryBooksProps = {
+  length: number;
+  libraryBooks: LibraryBook[];
+  message: string;
+  page: number;
+};
+
 const libraryBooksSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBooksFromLibrary: builder.query({
@@ -12,6 +25,9 @@ const libraryBooksSlice = apiSlice.injectEndpoints({
             Authorization: `Bearer ${token}`,
           },
         };
+      },
+      transformResponse: (response: GetLibraryBooksProps) => {
+        return response;
       },
     }),
     addBookToLibrary: builder.mutation({
