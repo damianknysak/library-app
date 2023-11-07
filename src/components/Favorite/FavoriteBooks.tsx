@@ -1,26 +1,43 @@
 import React from "react";
+import { GetLikedBooksProps } from "../../features/likedbooks/likedBooksSlice";
+import FavoriteBookCard from "./FavoriteBookCard";
 
-const FavoriteBooks: React.FC<{ data: any }> = ({ data }) => {
+const FavoriteBooks: React.FC<{
+  data: GetLikedBooksProps;
+  activeBookCard: string | undefined;
+  setActiveBookCard:
+    | React.Dispatch<React.SetStateAction<string | undefined>>
+    | undefined;
+  activeAuthor: string | undefined;
+  setActiveAuthor:
+    | React.Dispatch<React.SetStateAction<string | undefined>>
+    | undefined;
+}> = ({
+  data,
+  activeBookCard,
+  setActiveBookCard,
+  activeAuthor,
+  setActiveAuthor,
+}) => {
   return (
-    <div className="flex flex-col w-full">
-      <div className="my-5">
-        <span className="text-2xl font-bold">Najpopularniejsze ostatnio</span>
-      </div>
+    <article>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-5 w-full">
-        {data && (
-          <>
-            {/* {data.works.map((book) => (
-              <TrendingBookCard
-                key={book.key}
-                book={book}
-                activeBookCard={activeBookCard}
-                setActiveBookCard={setActiveBookCard}
-              />
-            ))} */}
-          </>
-        )}
+        {data &&
+          data.likedBooks.map((book) => {
+            return (
+              <React.Fragment key={book._id}>
+                <FavoriteBookCard
+                  activeBookCard={activeBookCard}
+                  setActiveBookCard={setActiveBookCard}
+                  activeAuthor={activeAuthor}
+                  setActiveAuthor={setActiveAuthor}
+                  bookUrl={book.bookUrl}
+                />
+              </React.Fragment>
+            );
+          })}
       </div>
-    </div>
+    </article>
   );
 };
 

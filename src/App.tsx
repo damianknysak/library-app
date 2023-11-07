@@ -8,12 +8,15 @@ import MyLibrary from "./Pages/MyLibrary";
 import Profile from "./Pages/Profile";
 import Help from "./Pages/Help";
 import AuthModal from "./components/Shared/AuthModal";
+import BookDetailsModal from "./components/Shared/BookDetailsModal";
 function App() {
   return (
     <div className="w-screen min-h-screen p-10 flex flex-col lg:flex-row">
       <Header />
       <div className="mt-10 lg:mt-20 w-full">
         <AuthModal />
+        <BookDetailsModal />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/category" element={<Category />} />

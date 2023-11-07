@@ -42,7 +42,6 @@ const Home: React.FC = () => {
 
   return (
     <div className="w-full">
-      <BookDetailsModal />
       <div className="flex lg:ml-[15rem]">
         <main className="flex flex-col w-full">
           {search ? (
@@ -83,6 +82,7 @@ const Home: React.FC = () => {
                     )
                 : undefined
             }
+            author=""
             categoryBook={undefined}
           />
         </aside>

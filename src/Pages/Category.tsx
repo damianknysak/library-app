@@ -53,6 +53,7 @@ const Category: React.FC = () => {
           <DetailsPanel
             activeBook={activeBookCard}
             book={undefined}
+            author=""
             categoryBook={
               categoryBooksData
                 ? categoryBooksData?.works.find(

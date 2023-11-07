@@ -29,12 +29,14 @@ interface DetailedPanelProps {
   activeBook: string | undefined;
   book: TrendingBook | undefined;
   categoryBook: CategoryBook | undefined;
+  author: string;
 }
 
 const DetailsPanel: React.FC<DetailedPanelProps> = ({
   activeBook,
   book,
   categoryBook,
+  author,
 }) => {
   const { data, pending } = useBookDetailedFetch({ WORKS_KEY: activeBook });
   const [detailsBookInfo, setDetailsBookInfo] = useState<
@@ -75,12 +77,12 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
     <aside className="lg:fixed right-0 top-15 w-[25rem]">
       <div className="mx-10 hidden lg:flex flex-col items-center space-y-4 p-14 bg-[--primary] h-[50rem]">
         <span className="text-white text-lg font-bold text-center">
-          {book?.title || categoryBook?.title || (
+          {book?.title || categoryBook?.title || detailsBookInfo?.title || (
             <Skeleton height={30} width={230} />
           )}
         </span>
         {!isImageLoaded && <Skeleton width={160} height={240} />}
-        {activeBook && (book || categoryBook) && detailsBookInfo && (
+        {activeBook && detailsBookInfo && (
           <div
             className={`w-40 h-60 rounded-xl bg-black/50 backdrop-blur-md ${
               !isImageLoaded && "hidden"
@@ -105,12 +107,14 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
           </div>
         )}
 
-        {book || categoryBook ? (
+        {book || categoryBook || detailsBookInfo ? (
           <div className="flex items-center space-x-5 text-white font-bold">
             <span>
               {book
                 ? book.author_name.join(", ")
-                : categoryBook?.authors[0].name}
+                : categoryBook?.authors[0].name
+                ? categoryBook?.authors[0].name
+                : author}
             </span>
             <span>
               {book

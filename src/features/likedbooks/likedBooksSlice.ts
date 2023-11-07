@@ -1,12 +1,23 @@
-import { useSelector } from "react-redux";
 import { apiSlice } from "../../app/api/apiSlice";
-import { selectCurrentToken } from "../auth/authSlice";
 
 const getHeader = (token: string) => {
   return {
     Accept: "application/json",
     Authorization: `Bearer ${token}`,
   };
+};
+
+export type LikedBook = {
+  _id: string;
+  bookUrl: string;
+  userId: string;
+};
+
+export type GetLikedBooksProps = {
+  length: number;
+  likedBooks: LikedBook[];
+  message: string;
+  page: number;
 };
 
 export const likedBooksSlice = apiSlice.injectEndpoints({
@@ -18,6 +29,9 @@ export const likedBooksSlice = apiSlice.injectEndpoints({
           method: "GET",
           headers: getHeader(token),
         };
+      },
+      transformResponse: (response: GetLikedBooksProps) => {
+        return response;
       },
     }),
     addLike: builder.mutation({
