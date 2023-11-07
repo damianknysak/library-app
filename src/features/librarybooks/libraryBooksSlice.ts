@@ -2,6 +2,18 @@ import { apiSlice } from "../../app/api/apiSlice";
 
 const libraryBooksSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getBooksFromLibrary: builder.query({
+      query: ({ token, page }) => {
+        return {
+          url: `/librarybooks?page=${page}`,
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      },
+    }),
     addBookToLibrary: builder.mutation({
       query: ({ body, token }) => {
         return {
@@ -52,4 +64,5 @@ export const {
   useAddBookToLibraryMutation,
   useCheckBookInLibraryQuery,
   useRemoveBookFromLibraryMutation,
+  useGetBooksFromLibraryQuery,
 } = libraryBooksSlice;
