@@ -9,7 +9,10 @@ import {
 } from "../../features/librarybooks/libraryBooksSlice";
 import { BiBookmark } from "react-icons/bi";
 
-const SaveInLibraryButton: React.FC<{ bookUrl: string }> = ({ bookUrl }) => {
+const SaveInLibraryButton: React.FC<{ bookUrl: string; book: any }> = ({
+  bookUrl,
+  book,
+}) => {
   const [isBookLiked, setIsBookLiked] = useState<boolean>(false);
   const token = useSelector(selectCurrentToken);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,6 +38,7 @@ const SaveInLibraryButton: React.FC<{ bookUrl: string }> = ({ bookUrl }) => {
       addLike({
         body: {
           bookUrl: bookUrl,
+          book: book,
         },
         token: token,
       });

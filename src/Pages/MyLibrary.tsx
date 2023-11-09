@@ -5,35 +5,43 @@ import { useGetBooksFromLibraryQuery } from "../features/librarybooks/libraryBoo
 import { selectCurrentToken } from "../features/auth/authSlice";
 import DetailsPanel from "../components/Home/DetailsPanel";
 
-function MyLibrary() {
+const MyLibrary = () => {
   const token = useSelector(selectCurrentToken);
   const [page, setPage] = useState<number>(1);
-  const { data: trendingBooksData } = useGetBooksFromLibraryQuery({
+  const { data: myLibraryBooksData } = useGetBooksFromLibraryQuery({
     token: token,
     page: page,
   });
 
   const [activeBookCard, setActiveBookCard] = useState<string | undefined>();
-  const [activeAuthor, setActiveAuthor] = useState<string | undefined>();
   useEffect(() => {
-    if (trendingBooksData && !activeBookCard) {
-      setActiveBookCard(trendingBooksData?.libraryBooks[0].bookUrl);
+    if (myLibraryBooksData && !activeBookCard) {
+      setActiveBookCard(
+        myLibraryBooksData.length > 0
+          ? myLibraryBooksData?.libraryBooks[0].bookUrl
+          : undefined
+      );
     }
-  }, [trendingBooksData, activeBookCard]);
+  }, [myLibraryBooksData, activeBookCard]);
+
+  let currAuthor =
+    activeBookCard &&
+    myLibraryBooksData &&
+    myLibraryBooksData.libraryBooks.find(
+      (book) => book.bookUrl === activeBookCard
+    );
 
   return (
     <div className="w-full">
-      <div className="my-5 lg:ml-[15rem]">
-        <span className="text-2xl font-bold">Twoje biblioteka</span>
-      </div>
       <div className="flex lg:ml-[15rem]">
         <main className="flex flex-col w-full">
+          <div className="my-5">
+            <span className="text-2xl font-bold">Twoje biblioteka</span>
+          </div>
           <MyLibraryBooks
             activeBookCard={activeBookCard}
             setActiveBookCard={setActiveBookCard}
-            activeAuthor={activeAuthor}
-            setActiveAuthor={setActiveAuthor}
-            data={trendingBooksData!}
+            data={myLibraryBooksData!}
           />
         </main>
 
@@ -42,12 +50,12 @@ function MyLibrary() {
             activeBook={activeBookCard}
             book={undefined}
             categoryBook={undefined}
-            author={activeAuthor!}
+            author={currAuthor ? currAuthor.book.authorDetails.name : ""}
           />
         </aside>
       </div>
     </div>
   );
-}
+};
 
 export default MyLibrary;

@@ -1,4 +1,6 @@
 import { apiSlice } from "../../app/api/apiSlice";
+import { DetailedBookProps } from "../../components/Home/DetailsPanel";
+import { AuthorProps } from "../../components/Shared/BookCardDetailsModal";
 
 const getHeader = (token: string) => {
   return {
@@ -7,10 +9,16 @@ const getHeader = (token: string) => {
   };
 };
 
+export type ExtendedBookProps = {
+  bookDetails: DetailedBookProps;
+  authorDetails: AuthorProps;
+};
+
 export type LikedBook = {
   _id: string;
   bookUrl: string;
   userId: string;
+  book: ExtendedBookProps;
 };
 
 export type GetLikedBooksProps = {

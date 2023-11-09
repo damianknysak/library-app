@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BiHeart, BiHeartCircle } from "react-icons/bi";
+import { BiHeart } from "react-icons/bi";
 import {
   useAddLikeMutation,
   useCheckLikeQuery,
@@ -9,13 +9,17 @@ import { useSelector } from "react-redux";
 import { selectCurrentToken } from "../../features/auth/authSlice";
 import { useSearchParams } from "react-router-dom";
 
-const LikeButton: React.FC<{ bookUrl: string }> = ({ bookUrl }) => {
+const LikeButton: React.FC<{ bookUrl: string; book: any }> = ({
+  bookUrl,
+  book,
+}) => {
   const [isBookLiked, setIsBookLiked] = useState<boolean>(false);
   const token = useSelector(selectCurrentToken);
   const [searchParams, setSearchParams] = useSearchParams();
   const { isError, isFetching, refetch } = useCheckLikeQuery({
     body: {
       bookUrl: bookUrl,
+      book: book,
     },
     token: token,
   });
@@ -29,12 +33,16 @@ const LikeButton: React.FC<{ bookUrl: string }> = ({ bookUrl }) => {
     }
     if (isBookLiked) {
       setIsBookLiked(false);
-      removeLike({ body: { bookUrl: bookUrl }, token: token });
+      removeLike({
+        body: { bookUrl: bookUrl },
+        token: token,
+      });
     } else {
       setIsBookLiked(true);
       addLike({
         body: {
           bookUrl: bookUrl,
+          book: book,
         },
         token: token,
       });

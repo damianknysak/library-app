@@ -1,17 +1,12 @@
-interface shortenStringReturnProps {
-    text: string,
-    isShortened: boolean
-}
+export function shortenString(string: string, wordsCounter: number): string {
+  if (!string) return wordsCounter > 15 ? "Brak opisu." : "Brak autora.";
 
-export function shortenString(string: string, wordsCounter: number): shortenStringReturnProps  {
-    if(!string) return {text: "Brak opisu.", isShortened: false};  
+  const words = string.split(" ");
 
-    const words = string.split(" ");
-
-    if (wordsCounter <= words.length) {
-      const shortenedString = words.slice(0, wordsCounter).join(" ") + "...";
-      return { text: shortenedString, isShortened: true };
-    } else {
-      return { text: string, isShortened: false };
-    }
+  if (wordsCounter <= words.length) {
+    const shortenedString = words.slice(0, wordsCounter).join(" ") + "...";
+    return shortenedString;
+  } else {
+    return string;
   }
+}

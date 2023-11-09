@@ -8,32 +8,38 @@ import FavoriteBooks from "../components/Favorite/FavoriteBooks";
 const Favorite = () => {
   const token = useSelector(selectCurrentToken);
   const [page, setPage] = useState<number>(1);
-  const { data: trendingBooksData } = useGetLikedBooksQuery({
+  const { data: likedBooksData } = useGetLikedBooksQuery({
     token: token,
     page: page,
   });
 
   const [activeBookCard, setActiveBookCard] = useState<string | undefined>();
-  const [activeAuthor, setActiveAuthor] = useState<string | undefined>();
   useEffect(() => {
-    if (trendingBooksData && !activeBookCard) {
-      setActiveBookCard(trendingBooksData?.likedBooks[0].bookUrl);
+    if (likedBooksData && !activeBookCard) {
+      setActiveBookCard(
+        likedBooksData.length > 0
+          ? likedBooksData?.likedBooks[0].bookUrl
+          : undefined
+      );
     }
-  }, [trendingBooksData, activeBookCard]);
+  }, [likedBooksData, activeBookCard]);
+
+  let currAuthor =
+    activeBookCard &&
+    likedBooksData &&
+    likedBooksData.likedBooks.find((book) => book.bookUrl === activeBookCard);
 
   return (
     <div className="w-full">
-      <div className="my-5 lg:ml-[15rem]">
-        <span className="text-2xl font-bold">Twoje ulubione</span>
-      </div>
       <div className="flex lg:ml-[15rem]">
         <main className="flex flex-col w-full">
+          <div className="my-5">
+            <span className="text-2xl font-bold">Twoje ulubione</span>
+          </div>
           <FavoriteBooks
             activeBookCard={activeBookCard}
             setActiveBookCard={setActiveBookCard}
-            activeAuthor={activeAuthor}
-            setActiveAuthor={setActiveAuthor}
-            data={trendingBooksData!}
+            data={likedBooksData!}
           />
         </main>
 
@@ -42,7 +48,7 @@ const Favorite = () => {
             activeBook={activeBookCard}
             book={undefined}
             categoryBook={undefined}
-            author={activeAuthor!}
+            author={currAuthor ? currAuthor.book.authorDetails.name : ""}
           />
         </aside>
       </div>

@@ -120,22 +120,28 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
             </span>
           </div>
           <div className="flex space-x-5">
-            {book ? (
+            {book && author ? (
               <div className="w-24 h-20 flex items-center justify-center">
-                <LikeButton bookUrl={book.key} />
+                <LikeButton
+                  book={{ bookDetails: book, authorDetails: author }}
+                  bookUrl={book.key}
+                />
               </div>
             ) : (
               <Skeleton width={96} height={80} />
             )}
-            {book ? (
+            {book && author ? (
               <div className="w-24 h-20 flex items-center justify-center">
-                <SaveInLibraryButton bookUrl={book.key} />
+                <SaveInLibraryButton
+                  book={{ bookDetails: book, authorDetails: author }}
+                  bookUrl={book.key}
+                />
               </div>
             ) : (
               <Skeleton width={96} height={80} />
             )}
 
-            {book ? (
+            {book && author ? (
               <div className="w-24 h-20 flex items-center justify-center">
                 <ShareUrlButton />
               </div>

@@ -8,17 +8,7 @@ const FavoriteBooks: React.FC<{
   setActiveBookCard:
     | React.Dispatch<React.SetStateAction<string | undefined>>
     | undefined;
-  activeAuthor: string | undefined;
-  setActiveAuthor:
-    | React.Dispatch<React.SetStateAction<string | undefined>>
-    | undefined;
-}> = ({
-  data,
-  activeBookCard,
-  setActiveBookCard,
-  activeAuthor,
-  setActiveAuthor,
-}) => {
+}> = ({ data, activeBookCard, setActiveBookCard }) => {
   return (
     <article>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-5 w-full">
@@ -29,9 +19,8 @@ const FavoriteBooks: React.FC<{
                 <FavoriteBookCard
                   activeBookCard={activeBookCard}
                   setActiveBookCard={setActiveBookCard}
-                  activeAuthor={activeAuthor}
-                  setActiveAuthor={setActiveAuthor}
                   bookUrl={book.bookUrl}
+                  bookExtended={book.book}
                 />
               </React.Fragment>
             );

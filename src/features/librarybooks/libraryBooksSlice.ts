@@ -1,9 +1,11 @@
 import { apiSlice } from "../../app/api/apiSlice";
+import { ExtendedBookProps } from "../likedbooks/likedBooksSlice";
 
 export type LibraryBook = {
   _id: string;
   bookUrl: string;
   userId: string;
+  book: ExtendedBookProps;
 };
 
 export type GetLibraryBooksProps = {

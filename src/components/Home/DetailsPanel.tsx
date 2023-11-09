@@ -68,7 +68,7 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
   }, [data]);
 
   const handleShowMore = () => {
-    searchParams.set("BookDetailsId", activeBook!);
+    activeBook && searchParams.set("BookDetailsId", activeBook!);
 
     setSearchParams(searchParams);
   };
@@ -111,10 +111,10 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
           <div className="flex items-center space-x-5 text-white font-bold">
             <span>
               {book
-                ? book.author_name.join(", ")
-                : categoryBook?.authors[0].name
-                ? categoryBook?.authors[0].name
-                : author}
+                ? shortenString(book.author_name.join(", "), 4)
+                : categoryBook?.authors[0].name!
+                ? shortenString(categoryBook?.authors[0].name!, 4)
+                : shortenString(author, 4)}
             </span>
             <span>
               {book
@@ -147,7 +147,7 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
 
         {detailsBookInfo ? (
           <span className="text-white">
-            {shortenString(detailsBookInfo.description, 20).text}{" "}
+            {shortenString(detailsBookInfo.description, 20)}{" "}
           </span>
         ) : (
           <Skeleton height={20} width={200} count={3} />
