@@ -103,16 +103,15 @@ const Home: React.FC = () => {
               />
             </>
           )}
-          {trendingBooksPending ||
-            (searchBooksPending && (
-              <div className="w-full flex items-center justify-center">
-                <img
-                  className="object-contain"
-                  src={bookSearchIndicator}
-                  alt="loading books"
-                />
-              </div>
-            ))}
+          {(trendingBooksPending || searchBooksPending) && (
+            <div className="w-full flex items-center justify-center">
+              <img
+                className="object-contain"
+                src={bookSearchIndicator}
+                alt="loading books"
+              />
+            </div>
+          )}
         </main>
 
         <aside className="hidden lg:block lg:min-w-[25rem]">

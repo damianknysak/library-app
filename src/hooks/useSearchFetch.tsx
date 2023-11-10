@@ -19,9 +19,6 @@ export const useSearchFetch = () => {
 
   const fetchAsync = async (page = 1) => {
     setPending(true);
-    console.log(
-      `https://openlibrary.org/search.json?q=${search}&limit=${10 * page}`
-    );
     const response = await fetch(
       `https://openlibrary.org/search.json?q=${search}&limit=${10 * page}`
     );

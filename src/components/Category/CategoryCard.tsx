@@ -1,17 +1,24 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import { Link } from "react-router-dom";
 
 interface CategoriesProps {
   activeCategory: string | undefined;
   category: { name: string; subject: string };
+  setPage: React.Dispatch<SetStateAction<number>>;
 }
 
 const CategoryCard: React.FC<CategoriesProps> = ({
   activeCategory,
   category,
+  setPage,
 }) => {
   return (
-    <Link to={`?subject=${category.subject}`}>
+    <Link
+      onClick={() => {
+        setPage(1);
+      }}
+      to={`?subject=${category.subject}`}
+    >
       <div
         className={`group hover:scale-110 transition-all h-32 w-20 rounded-3xl cursor-pointer ${
           activeCategory === category.subject
