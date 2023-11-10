@@ -17,10 +17,13 @@ export const useSearchFetch = () => {
   const urlParams = new URLSearchParams(location.search);
   const search = urlParams.get("search") ? urlParams.get("search") : "";
 
-  const fetchAsync = async () => {
+  const fetchAsync = async (page = 1) => {
     setPending(true);
+    console.log(
+      `https://openlibrary.org/search.json?q=${search}&limit=${10 * page}`
+    );
     const response = await fetch(
-      `https://openlibrary.org/search.json?q=${search}&limit=10`
+      `https://openlibrary.org/search.json?q=${search}&limit=${10 * page}`
     );
     const responseJson = await response.json();
     responseJson.query = search;
@@ -29,10 +32,11 @@ export const useSearchFetch = () => {
   };
 
   useEffect(() => {
-    if (search) fetchAsync();
+    if (search && !pending) fetchAsync();
   }, [search]);
   return {
     pending,
     data,
+    fetchAsync,
   };
 };

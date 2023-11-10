@@ -9,7 +9,7 @@ export const useTrendingBookFetch = ({ API_URL }: FetchProps) => {
   const [pending, setPending] = useState<boolean>(false);
   const [data, setData] = useState<TrendingBooksArray>();
 
-  const fetchAsync = async () => {
+  const fetchAsync = async ({ API_URL }: FetchProps) => {
     setPending(true);
     const response = await fetch(API_URL);
     const responseJson = await response.json();
@@ -18,10 +18,11 @@ export const useTrendingBookFetch = ({ API_URL }: FetchProps) => {
   };
 
   useEffect(() => {
-    fetchAsync();
+    fetchAsync({ API_URL });
   }, []);
   return {
     pending,
     data,
+    fetchAsync,
   };
 };

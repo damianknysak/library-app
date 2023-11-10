@@ -7,23 +7,33 @@ import RecommendedBooks from "../components/Home/RecommendedBooks";
 import SearchResults from "../components/Home/SearchResults";
 import { useLocation } from "react-router-dom";
 import { useSearchFetch } from "../hooks/useSearchFetch";
-import { useDispatch, useSelector } from "react-redux";
-import { AuthState, selectCurrentUser } from "../features/auth/authSlice";
-import BookDetailsModal from "../components/Shared/BookDetailsModal";
-import { setCurrentBook } from "../features/books/bookSlice";
+import bookSearchIndicator from "../assets/book_search.gif";
+
 export interface TrendingBooksArray {
   works: TrendingBook[];
 }
 
 const Home: React.FC = () => {
-  const { data: trendingBooksData } = useTrendingBookFetch({
-    API_URL: "http://openlibrary.org/trending/daily.json?limit=10",
+  const [trendingBooksPage, setTrendingBooksPage] = useState(1);
+  const [searchBooksPage, setSearchBooksPage] = useState(1);
+  const {
+    data: trendingBooksData,
+    pending: trendingBooksPending,
+    fetchAsync: refetchTrendingBooks,
+  } = useTrendingBookFetch({
+    API_URL: `http://openlibrary.org/trending/daily.json?limit=${
+      10 * trendingBooksPage
+    }`,
   });
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const search = searchParams.get("search") ? searchParams.get("search") : "";
   const [activeBookCard, setActiveBookCard] = useState<string | undefined>();
-  const { data: searchResultsData } = useSearchFetch();
+  const {
+    data: searchResultsData,
+    pending: searchBooksPending,
+    fetchAsync: refetchSearchBooks,
+  } = useSearchFetch();
   useEffect(() => {
     const isDetailPanelFromSearch =
       !search &&
@@ -39,6 +49,35 @@ const Home: React.FC = () => {
     ...(trendingBooksData?.works || []),
     ...(searchResultsData?.docs || []),
   ];
+
+  //infinite scroll
+  const handleScroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop !==
+        document.documentElement.offsetHeight ||
+      trendingBooksPending
+    ) {
+      return;
+    }
+    if (!search) {
+      refetchTrendingBooks({
+        API_URL: `http://openlibrary.org/trending/daily.json?limit=${
+          (trendingBooksPage + 1) * 10
+        }`,
+      });
+      setTrendingBooksPage(trendingBooksPage + 1);
+    } else {
+      if (!searchBooksPending) {
+        refetchSearchBooks(searchBooksPage + 1);
+        setSearchBooksPage(searchBooksPage + 1);
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [trendingBooksPending, searchBooksPending]);
 
   return (
     <div className="w-full">
@@ -64,6 +103,16 @@ const Home: React.FC = () => {
               />
             </>
           )}
+          {trendingBooksPending ||
+            (searchBooksPending && (
+              <div className="w-full flex items-center justify-center">
+                <img
+                  className="object-contain"
+                  src={bookSearchIndicator}
+                  alt="loading books"
+                />
+              </div>
+            ))}
         </main>
 
         <aside className="hidden lg:block lg:min-w-[25rem]">

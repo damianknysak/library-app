@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
-import { GetLibraryBooksProps } from "../../features/librarybooks/libraryBooksSlice";
+import {
+  GetLibraryBooksProps,
+  LibraryBook,
+} from "../../features/librarybooks/libraryBooksSlice";
 import MyLibraryBookCard from "./MyLibraryBookCard";
 
 const MyLibraryBooks: React.FC<{
-  data: GetLibraryBooksProps;
+  data: LibraryBook[];
   activeBookCard: string | undefined;
   setActiveBookCard:
     | React.Dispatch<React.SetStateAction<string | undefined>>
@@ -14,7 +17,7 @@ const MyLibraryBooks: React.FC<{
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-5 w-full">
         {data &&
           data.length > 0 &&
-          data.libraryBooks.map((book) => {
+          data.map((book) => {
             return (
               <React.Fragment key={book._id}>
                 <MyLibraryBookCard

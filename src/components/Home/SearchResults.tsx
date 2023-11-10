@@ -1,8 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  SearchFetchResultsProps,
-  useSearchFetch,
-} from "../../hooks/useSearchFetch";
+import { SearchFetchResultsProps } from "../../hooks/useSearchFetch";
 import TrendingBookCard from "./TrendingBookCard";
 import { useLocation } from "react-router-dom";
 import bookSearchIndicator from "../../assets/book_search.gif";

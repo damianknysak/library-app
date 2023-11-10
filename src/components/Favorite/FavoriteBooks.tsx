@@ -1,9 +1,12 @@
 import React from "react";
-import { GetLikedBooksProps } from "../../features/likedbooks/likedBooksSlice";
+import {
+  GetLikedBooksProps,
+  LikedBook,
+} from "../../features/likedbooks/likedBooksSlice";
 import FavoriteBookCard from "./FavoriteBookCard";
 
 const FavoriteBooks: React.FC<{
-  data: GetLikedBooksProps;
+  data: LikedBook[];
   activeBookCard: string | undefined;
   setActiveBookCard:
     | React.Dispatch<React.SetStateAction<string | undefined>>
@@ -13,7 +16,7 @@ const FavoriteBooks: React.FC<{
     <article>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-5 w-full">
         {data &&
-          data.likedBooks.map((book) => {
+          data.map((book) => {
             return (
               <React.Fragment key={book._id}>
                 <FavoriteBookCard

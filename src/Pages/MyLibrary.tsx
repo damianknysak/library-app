@@ -1,17 +1,31 @@
 import { useEffect, useState } from "react";
 import MyLibraryBooks from "../components/MyLibrary/MyLibraryBooks";
 import { useSelector } from "react-redux";
-import { useGetBooksFromLibraryQuery } from "../features/librarybooks/libraryBooksSlice";
+import {
+  LibraryBook,
+  useGetBooksFromLibraryQuery,
+} from "../features/librarybooks/libraryBooksSlice";
 import { selectCurrentToken } from "../features/auth/authSlice";
+import bookSearchIndicator from "../assets/book_search.gif";
 import DetailsPanel from "../components/Home/DetailsPanel";
 
 const MyLibrary = () => {
   const token = useSelector(selectCurrentToken);
   const [page, setPage] = useState<number>(1);
-  const { data: myLibraryBooksData } = useGetBooksFromLibraryQuery({
+  const { data: myLibraryBooksData, isLoading } = useGetBooksFromLibraryQuery({
     token: token,
     page: page,
   });
+  const [libraryBooks, setLibraryBooks] = useState<LibraryBook[]>([]);
+
+  useEffect(() => {
+    if (myLibraryBooksData) {
+      setLibraryBooks((prevState) => [
+        ...prevState,
+        ...myLibraryBooksData.libraryBooks,
+      ]);
+    }
+  }, [myLibraryBooksData]);
 
   const [activeBookCard, setActiveBookCard] = useState<string | undefined>();
   useEffect(() => {
@@ -26,11 +40,24 @@ const MyLibrary = () => {
 
   let currAuthor =
     activeBookCard &&
-    myLibraryBooksData &&
-    myLibraryBooksData.libraryBooks.find(
-      (book) => book.bookUrl === activeBookCard
-    );
+    libraryBooks &&
+    libraryBooks.find((book) => book.bookUrl === activeBookCard);
+  //infinite scroll
+  const handleScroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop !==
+        document.documentElement.offsetHeight ||
+      isLoading
+    ) {
+      return;
+    }
+    setPage(page + 1);
+  };
 
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isLoading]);
   return (
     <div className="w-full">
       <div className="flex lg:ml-[15rem]">
@@ -41,8 +68,17 @@ const MyLibrary = () => {
           <MyLibraryBooks
             activeBookCard={activeBookCard}
             setActiveBookCard={setActiveBookCard}
-            data={myLibraryBooksData!}
+            data={libraryBooks!}
           />
+          {isLoading && (
+            <div className="w-full flex items-center justify-center">
+              <img
+                className="object-contain"
+                src={bookSearchIndicator}
+                alt="loading books"
+              />
+            </div>
+          )}
         </main>
 
         <aside className="hidden lg:block lg:min-w-[25rem]">

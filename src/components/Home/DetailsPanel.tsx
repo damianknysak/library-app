@@ -111,7 +111,9 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
           <div className="flex items-center space-x-5 text-white font-bold">
             <span>
               {book
-                ? shortenString(book.author_name.join(", "), 4)
+                ? book.author_name
+                  ? shortenString(book.author_name.join(", "), 4)
+                  : "Brak autora."
                 : categoryBook?.authors[0].name!
                 ? shortenString(categoryBook?.authors[0].name!, 4)
                 : shortenString(author, 4)}
