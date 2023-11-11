@@ -8,6 +8,7 @@ import {
   useRemoveBookFromLibraryMutation,
 } from "../../features/librarybooks/libraryBooksSlice";
 import { BiBookmark } from "react-icons/bi";
+import { toast } from "react-toastify";
 
 const SaveInLibraryButton: React.FC<{ bookUrl: string; book: any }> = ({
   bookUrl,
@@ -26,8 +27,7 @@ const SaveInLibraryButton: React.FC<{ bookUrl: string; book: any }> = ({
   const [removeLike] = useRemoveBookFromLibraryMutation();
   const handleClick = () => {
     if (!token) {
-      searchParams.set("authorize", "login");
-      setSearchParams(searchParams);
+      toast.warn("Zaloguj się, by zapisać!");
       return;
     }
     if (isBookLiked) {

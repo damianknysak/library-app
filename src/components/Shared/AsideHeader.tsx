@@ -11,6 +11,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { logOut, selectCurrentUser } from "../../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const AsideHeader: React.FC = () => {
   const location = useLocation();
@@ -58,7 +59,15 @@ const AsideHeader: React.FC = () => {
               <span>Kategorie</span>
             </div>
           </Link>
-          <Link to="/mylibrary">
+          <Link
+            onClick={(e) => {
+              if (!user) {
+                e.preventDefault();
+                toast.warn("Najpierw zaloguj się!");
+              }
+            }}
+            to="/mylibrary"
+          >
             <div
               className={`${
                 location.pathname === "/mylibrary"
@@ -80,7 +89,15 @@ const AsideHeader: React.FC = () => {
               <span>Moja biblioteka</span>
             </div>
           </Link>
-          <Link to="/favorite">
+          <Link
+            onClick={(e) => {
+              if (!user) {
+                e.preventDefault();
+                toast.warn("Najpierw zaloguj się!");
+              }
+            }}
+            to="/favorite"
+          >
             <div
               className={`${
                 location.pathname === "/favorite"
@@ -103,7 +120,15 @@ const AsideHeader: React.FC = () => {
             </div>
           </Link>
           <hr className="border-1"></hr>
-          <Link to="/profile">
+          <Link
+            onClick={(e) => {
+              if (!user) {
+                e.preventDefault();
+                toast.warn("Najpierw zaloguj się!");
+              }
+            }}
+            to="/profile"
+          >
             <div
               className={`${
                 location.pathname === "/profile"

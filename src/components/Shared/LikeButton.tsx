@@ -8,6 +8,7 @@ import {
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "../../features/auth/authSlice";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LikeButton: React.FC<{ bookUrl: string; book: any }> = ({
   bookUrl,
@@ -27,8 +28,7 @@ const LikeButton: React.FC<{ bookUrl: string; book: any }> = ({
   const [removeLike] = useRemoveLikeMutation();
   const handleClick = () => {
     if (!token) {
-      searchParams.set("authorize", "login");
-      setSearchParams(searchParams);
+      toast.warn("Zaloguj się, by dać like");
       return;
     }
     if (isBookLiked) {

@@ -46,6 +46,7 @@ const authSlice = createSlice({
     ) => {
       console.log(action.payload.profileImageUrl);
       state.user!.profileImage = action.payload.profileImageUrl;
+      localStorage.setItem("user", JSON.stringify(state.user));
     },
   },
 });
