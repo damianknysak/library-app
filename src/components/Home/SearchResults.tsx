@@ -19,7 +19,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   const urlParams = new URLSearchParams(location.search);
   const search = urlParams.get("search") ? urlParams.get("search") : "";
   useEffect(() => {
-    if (data) setActiveBookCard(data.docs[0].key);
+    if (data && data.numFound > 0) setActiveBookCard(data.docs[0].key);
   }, [data]);
   return (
     <>
@@ -33,17 +33,25 @@ const SearchResults: React.FC<SearchResultsProps> = ({
               Liczba wyników: <span className="font-bold">{data.numFound}</span>
             </span>
           </div>
-
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-5 w-full">
-            {data.docs.map((book) => (
-              <TrendingBookCard
-                key={book.key}
-                book={book}
-                activeBookCard={activeBookCard}
-                setActiveBookCard={setActiveBookCard}
+          {data.numFound > 0 ? (
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-5 w-full">
+              {data.docs.map((book) => (
+                <TrendingBookCard
+                  key={book.key}
+                  book={book}
+                  activeBookCard={activeBookCard}
+                  setActiveBookCard={setActiveBookCard}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="w-full flex items-center justify-center">
+              <img
+                className="h-40 object-contain mt-10"
+                src={require("../../assets/no-results.png")}
               />
-            ))}
-          </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="flex flex-col">
