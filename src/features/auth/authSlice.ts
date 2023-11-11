@@ -27,8 +27,8 @@ const authSlice = createSlice({
       state,
       action: PayloadAction<{ user: User; accessToken: string }>
     ) => {
-      console.log("Czyy");
       const { user, accessToken } = action.payload;
+      console.log(user);
       state.user = user;
       state.token = accessToken;
       localStorage.setItem("user", JSON.stringify(user));
@@ -44,7 +44,6 @@ const authSlice = createSlice({
       state,
       action: PayloadAction<{ profileImageUrl: string }>
     ) => {
-      console.log(action.payload.profileImageUrl);
       state.user!.profileImage = action.payload.profileImageUrl;
       localStorage.setItem("user", JSON.stringify(state.user));
     },

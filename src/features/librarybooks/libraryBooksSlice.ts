@@ -6,6 +6,7 @@ export type LibraryBook = {
   bookUrl: string;
   userId: string;
   book: ExtendedBookProps;
+  isRead: boolean;
 };
 
 export type GetLibraryBooksProps = {
@@ -75,6 +76,21 @@ const libraryBooksSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    updateLibraryBook: builder.mutation({
+      query: ({ body, token }) => {
+        return {
+          url: "/librarybooks/update",
+          method: "POST",
+          body: {
+            ...body,
+          },
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -83,4 +99,5 @@ export const {
   useCheckBookInLibraryQuery,
   useRemoveBookFromLibraryMutation,
   useGetBooksFromLibraryQuery,
+  useUpdateLibraryBookMutation,
 } = libraryBooksSlice;

@@ -24,7 +24,7 @@ const MyLibraryBooks: React.FC<{
                   activeBookCard={activeBookCard}
                   setActiveBookCard={setActiveBookCard}
                   bookUrl={book.bookUrl}
-                  bookExtended={book.book}
+                  bookExtended={book}
                 />
               </React.Fragment>
             );
