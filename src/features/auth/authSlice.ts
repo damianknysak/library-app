@@ -6,6 +6,7 @@ export interface AuthState {
 }
 
 export interface User {
+  _id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -26,6 +27,7 @@ const authSlice = createSlice({
       state,
       action: PayloadAction<{ user: User; accessToken: string }>
     ) => {
+      console.log("Czyy");
       const { user, accessToken } = action.payload;
       state.user = user;
       state.token = accessToken;
@@ -38,10 +40,17 @@ const authSlice = createSlice({
       localStorage.removeItem("user");
       localStorage.removeItem("accessToken");
     },
+    setProfileImage: (
+      state,
+      action: PayloadAction<{ profileImageUrl: string }>
+    ) => {
+      console.log(action.payload.profileImageUrl);
+      state.user!.profileImage = action.payload.profileImageUrl;
+    },
   },
 });
 
-export const { setCredentials, logOut } = authSlice.actions;
+export const { setCredentials, logOut, setProfileImage } = authSlice.actions;
 
 export default authSlice.reducer;
 

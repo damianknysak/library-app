@@ -34,7 +34,6 @@ export const useCategoryBookWorkFetch = ({ API_URL }: FetchProps) => {
 
   const fetchAsync = async () => {
     setPending(true);
-    console.log(API_URL);
     const response = await fetch(API_URL);
     const responseJson = await response.json();
     if (responseJson.name === "juvenile fiction")
