@@ -1,4 +1,5 @@
 import { apiSlice } from "../../app/api/apiSlice";
+import { LibraryBooksStats } from "../../components/MyLibrary/MyLibraryStats";
 import { ExtendedBookProps } from "../likedbooks/likedBooksSlice";
 
 export type LibraryBook = {
@@ -30,6 +31,21 @@ const libraryBooksSlice = apiSlice.injectEndpoints({
         };
       },
       transformResponse: (response: GetLibraryBooksProps) => {
+        return response;
+      },
+    }),
+    getLibraryBooksStats: builder.query({
+      query: ({ token }) => {
+        return {
+          url: "/librarybooks/stats",
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      },
+      transformResponse: (response: LibraryBooksStats) => {
         return response;
       },
     }),
@@ -100,4 +116,5 @@ export const {
   useRemoveBookFromLibraryMutation,
   useGetBooksFromLibraryQuery,
   useUpdateLibraryBookMutation,
+  useGetLibraryBooksStatsQuery,
 } = libraryBooksSlice;

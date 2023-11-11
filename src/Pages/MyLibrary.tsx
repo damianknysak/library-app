@@ -8,6 +8,7 @@ import {
 import { selectCurrentToken } from "../features/auth/authSlice";
 import bookSearchIndicator from "../assets/book_search.gif";
 import DetailsPanel from "../components/Home/DetailsPanel";
+import MyLibraryStats from "../components/MyLibrary/MyLibraryStats";
 
 const MyLibrary = () => {
   const token = useSelector(selectCurrentToken);
@@ -61,10 +62,12 @@ const MyLibrary = () => {
   return (
     <div className="w-full">
       <div className="flex lg:ml-[15rem]">
-        <main className="flex flex-col w-full">
-          <div className="my-5">
+        <main className="flex flex-col w-full space-y-5">
+          <div>
             <span className="text-2xl font-bold">Twoje biblioteka</span>
           </div>
+          <MyLibraryStats />
+
           <MyLibraryBooks
             activeBookCard={activeBookCard}
             setActiveBookCard={setActiveBookCard}

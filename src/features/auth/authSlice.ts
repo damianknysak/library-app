@@ -28,7 +28,6 @@ const authSlice = createSlice({
       action: PayloadAction<{ user: User; accessToken: string }>
     ) => {
       const { user, accessToken } = action.payload;
-      console.log(user);
       state.user = user;
       state.token = accessToken;
       localStorage.setItem("user", JSON.stringify(user));
