@@ -34,9 +34,6 @@ const MyLibraryStats = () => {
         })
       : undefined;
 
-  useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
   return (
     <div className="flex flex-col space-y-5 items-center justify-between shadow-md shadow-gray-500 p-4 rounded-b-xl overflow-hidden xl:p-10 3xl:space-y-0 3xl:flex-row  3xl:space-x-5  ">
       <div className="flex flex-col h-full space-y-4 p-4 shadow-md rounded-xl w-full">

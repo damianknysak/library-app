@@ -22,11 +22,15 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
 
   const getAuthorDetails = async () => {
     if (book.authors && book.authors[0].author.key) {
-      const response = await fetch(
-        `https://openlibrary.org${book.authors[0].author.key}.json`
-      );
-      const responseJson = await response.json();
-      return responseJson;
+      try {
+        const response = await fetch(
+          `https://openlibrary.org${book.authors[0].author.key}.json`
+        );
+        const responseJson = await response.json();
+        return responseJson;
+      } catch (e) {
+        console.error(e);
+      }
     }
     return undefined;
   };

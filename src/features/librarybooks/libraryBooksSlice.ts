@@ -20,7 +20,8 @@ export type GetLibraryBooksProps = {
 const libraryBooksSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBooksFromLibrary: builder.query({
-      query: ({ token, page }) => {
+      query: ({ token, page = 1 }) => {
+        console.log(`/librarybooks?page=${page}`);
         return {
           url: `/librarybooks?page=${page}`,
           method: "GET",
@@ -30,6 +31,7 @@ const libraryBooksSlice = apiSlice.injectEndpoints({
           },
         };
       },
+      providesTags: ["LibraryBooksList"],
       transformResponse: (response: GetLibraryBooksProps) => {
         return response;
       },
@@ -45,6 +47,7 @@ const libraryBooksSlice = apiSlice.injectEndpoints({
           },
         };
       },
+      providesTags: ["LibraryBooksStats"],
       transformResponse: (response: LibraryBooksStats) => {
         return response;
       },
@@ -63,9 +66,11 @@ const libraryBooksSlice = apiSlice.injectEndpoints({
           },
         };
       },
+      invalidatesTags: ["LibraryBooksList", "LibraryBooksStats"],
     }),
     removeBookFromLibrary: builder.mutation({
       query: ({ body, token }) => {
+        console.log(`/librarybooks/remove`);
         return {
           url: "/librarybooks/remove",
           method: "POST",
@@ -78,6 +83,7 @@ const libraryBooksSlice = apiSlice.injectEndpoints({
           },
         };
       },
+      invalidatesTags: ["LibraryBooksList", "LibraryBooksStats"],
     }),
     checkBookInLibrary: builder.query({
       query: ({ body, token }) => ({
@@ -106,6 +112,7 @@ const libraryBooksSlice = apiSlice.injectEndpoints({
           },
         };
       },
+      invalidatesTags: ["LibraryBooksStats"],
     }),
   }),
 });

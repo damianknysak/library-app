@@ -9,6 +9,7 @@ import { selectCurrentToken } from "../features/auth/authSlice";
 import bookSearchIndicator from "../assets/book_search.gif";
 import DetailsPanel from "../components/Home/DetailsPanel";
 import MyLibraryStats from "../components/MyLibrary/MyLibraryStats";
+import { LikedBook } from "../features/likedbooks/likedBooksSlice";
 
 const MyLibrary = () => {
   const token = useSelector(selectCurrentToken);
@@ -17,14 +18,43 @@ const MyLibrary = () => {
     token: token,
     page: page,
   });
-  const [libraryBooks, setLibraryBooks] = useState<LibraryBook[]>([]);
+  const [libraryBooksPages, setLibraryBooksPages] = useState<
+    { objects: LibraryBook[]; page: number }[]
+  >([]);
 
+  const libraryBooks: LibraryBook[] = libraryBooksPages
+    .map((el) => el.objects)
+    .flat(1);
   useEffect(() => {
     if (myLibraryBooksData) {
-      setLibraryBooks((prevState) => [
-        ...prevState,
-        ...myLibraryBooksData.libraryBooks,
-      ]);
+      setLibraryBooksPages((prevState) => {
+        const updatedPages = prevState.map((pageData) => {
+          if (pageData.page === myLibraryBooksData.page) {
+            // Jeżeli page jest taki sam, aktualizuj obiekt
+            return {
+              objects: [...myLibraryBooksData.libraryBooks],
+              page: myLibraryBooksData.page,
+            };
+          } else {
+            // W przeciwnym razie zachowaj istniejący obiekt bez zmian
+            return pageData;
+          }
+        });
+
+        // Jeżeli nie istnieje żaden obiekt o takim page, dodaj nowy
+        if (
+          !updatedPages.some(
+            (pageData) => pageData.page === myLibraryBooksData.page
+          )
+        ) {
+          updatedPages.push({
+            objects: [...myLibraryBooksData.libraryBooks],
+            page: myLibraryBooksData.page,
+          });
+        }
+
+        return updatedPages;
+      });
     }
   }, [myLibraryBooksData]);
 
