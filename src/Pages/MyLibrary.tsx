@@ -9,7 +9,6 @@ import { selectCurrentToken } from "../features/auth/authSlice";
 import bookSearchIndicator from "../assets/book_search.gif";
 import DetailsPanel from "../components/Home/DetailsPanel";
 import MyLibraryStats from "../components/MyLibrary/MyLibraryStats";
-import { LikedBook } from "../features/likedbooks/likedBooksSlice";
 
 const MyLibrary = () => {
   const token = useSelector(selectCurrentToken);
@@ -120,6 +119,7 @@ const MyLibrary = () => {
               <img
                 className="w-40 object-contain"
                 src={require("../assets/no-results.png")}
+                alt="no-results"
               />
             </div>
           )}

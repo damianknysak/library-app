@@ -44,6 +44,7 @@ export const likedBooksSlice = apiSlice.injectEndpoints({
           headers: getHeader(token),
         };
       },
+      providesTags: ["LikedBooksList"],
       transformResponse: (response: GetLikedBooksProps) => {
         return response;
       },
@@ -59,6 +60,7 @@ export const likedBooksSlice = apiSlice.injectEndpoints({
           headers: getHeader(token),
         };
       },
+      invalidatesTags: ["LikedBooksList", "LikedBooksStats"],
     }),
     removeLike: builder.mutation({
       query: ({ body, token }) => {
@@ -71,6 +73,7 @@ export const likedBooksSlice = apiSlice.injectEndpoints({
           headers: getHeader(token),
         };
       },
+      invalidatesTags: ["LikedBooksList", "LikedBooksStats"],
     }),
     checkLike: builder.query({
       query: ({ body, token }) => ({
@@ -93,6 +96,7 @@ export const likedBooksSlice = apiSlice.injectEndpoints({
           },
         };
       },
+      providesTags: ["LikedBooksStats"],
       transformResponse: (response: LikedBooksStats) => {
         return response;
       },

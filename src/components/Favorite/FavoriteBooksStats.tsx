@@ -1,16 +1,10 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "../../features/auth/authSlice";
 import { useGetLikedBooksStatsQuery } from "../../features/likedbooks/likedBooksSlice";
-import {
-  BiBook,
-  BiLeftTopArrowCircle,
-  BiSolidFlame,
-  BiSolidLeftTopArrowCircle,
-  BiUser,
-} from "react-icons/bi";
+import { BiBook, BiLeftTopArrowCircle, BiUser } from "react-icons/bi";
 import { shortenString } from "../../utils/StringUtils";
 import MyLibraryCharts from "../MyLibrary/MyLibraryCharts";
+import Skeleton from "react-loading-skeleton";
 
 const FavoriteBooksStats = () => {
   const token = useSelector(selectCurrentToken);
@@ -44,6 +38,7 @@ const FavoriteBooksStats = () => {
             <span>Polubione książki</span>
             <span className="text-3xl font-bold">
               {data && data.totalAmount}
+              {isLoading && <Skeleton height={36} width={50} />}
             </span>
           </div>
         </div>
@@ -59,6 +54,7 @@ const FavoriteBooksStats = () => {
                 data.topAuthors.length > 0 &&
                 shortenString(data.topAuthors[0].el, 3)}
               {data && data.topAuthors.length === 0 && "Nieznany"}
+              {isLoading && <Skeleton height={36} width={140} />}
             </span>
           </div>
         </div>
@@ -74,6 +70,7 @@ const FavoriteBooksStats = () => {
                 data.topSubjects.length > 0 &&
                 shortenString(data.topSubjects[0].el, 4)}
               {data && data.topSubjects.length === 0 && "Nieznany"}
+              {isLoading && <Skeleton height={28} width={140} />}
             </span>
           </div>
         </div>

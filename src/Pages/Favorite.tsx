@@ -18,14 +18,43 @@ const Favorite = () => {
     page: page,
   });
 
-  const [likedBooks, setLikedBooks] = useState<LikedBook[]>([]);
+  const [libraryBooksPages, setLibraryBooksPages] = useState<
+    { objects: LikedBook[]; page: number }[]
+  >([]);
+  const likedBooks: LikedBook[] = libraryBooksPages
+    .map((el) => el.objects)
+    .flat(1);
 
   useEffect(() => {
     if (likedBooksData) {
-      setLikedBooks((prevState) => [
-        ...prevState!,
-        ...likedBooksData.likedBooks,
-      ]);
+      setLibraryBooksPages((prevState) => {
+        const updatedPages = prevState.map((pageData) => {
+          if (pageData.page === likedBooksData.page) {
+            // Jeżeli page jest taki sam, aktualizuj obiekt
+            return {
+              objects: [...likedBooksData.likedBooks],
+              page: likedBooksData.page,
+            };
+          } else {
+            // W przeciwnym razie zachowaj istniejący obiekt bez zmian
+            return pageData;
+          }
+        });
+
+        // Jeżeli nie istnieje żaden obiekt o takim page, dodaj nowy
+        if (
+          !updatedPages.some(
+            (pageData) => pageData.page === likedBooksData.page
+          )
+        ) {
+          updatedPages.push({
+            objects: [...likedBooksData.likedBooks],
+            page: likedBooksData.page,
+          });
+        }
+
+        return updatedPages;
+      });
     }
   }, [likedBooksData]);
 
@@ -92,6 +121,7 @@ const Favorite = () => {
               <img
                 className="w-40 object-contain"
                 src={require("../assets/no-results.png")}
+                alt="no-results"
               />
             </div>
           )}

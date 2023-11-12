@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
 import { useGetLibraryBooksStatsQuery } from "../../features/librarybooks/libraryBooksSlice";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "../../features/auth/authSlice";
 import { BiBook, BiSolidFlame, BiUser } from "react-icons/bi";
 import { shortenString } from "../../utils/StringUtils";
-import { BarChart, PieChart } from "@mui/x-charts";
 import MyLibraryCharts from "./MyLibraryCharts";
 import Skeleton from "react-loading-skeleton";
 
@@ -60,6 +58,7 @@ const MyLibraryStats = () => {
             <span>Przeczytane książki</span>
             <span className="text-3xl font-bold">
               {data && data.readAmount}
+              {isLoading && <Skeleton height={36} width={50} />}
             </span>
           </div>
         </div>
@@ -75,6 +74,7 @@ const MyLibraryStats = () => {
                 data.topAuthors.length > 0 &&
                 shortenString(data.topAuthors[0].el, 3)}
               {data && data.topAuthors.length === 0 && "Nieznany"}
+              {isLoading && <Skeleton height={36} width={140} />}
             </span>
           </div>
         </div>

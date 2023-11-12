@@ -1,10 +1,9 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../features/auth/authSlice";
-import { BASE_API_URL } from "../app/api/apiSlice";
-import { BiEdit } from "react-icons/bi";
 import ProfileImage from "../components/Profile/ProfileImage";
-import ProfileLikedBooks from "../components/Profile/ProfileLikedBooks";
+import MyLibraryStats from "../components/MyLibrary/MyLibraryStats";
+import FavoriteBooksStats from "../components/Favorite/FavoriteBooksStats";
 
 const Profile: React.FC = () => {
   const user = useSelector(selectCurrentUser);
@@ -14,11 +13,20 @@ const Profile: React.FC = () => {
       <div className="flex lg:ml-[15rem]">
         <main className="flex flex-col w-full">
           {user ? (
-            <>
-              <ProfileLikedBooks />
-              <ProfileLikedBooks />
-              <ProfileLikedBooks />
-            </>
+            <div className="space-y-5">
+              <div>
+                <span className="text-2xl font-bold">
+                  Statystyki Twojej biblioteki
+                </span>
+              </div>
+              <MyLibraryStats />
+              <div>
+                <span className="text-2xl font-bold">
+                  Statystyki polubionych książek
+                </span>
+              </div>
+              <FavoriteBooksStats />
+            </div>
           ) : (
             <>
               <span>Nie jesteś zalogowany</span>
