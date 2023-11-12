@@ -28,6 +28,12 @@ export type GetLikedBooksProps = {
   page: number;
 };
 
+export type LikedBooksStats = {
+  topSubjects: { el: string; count: number }[];
+  topAuthors: { el: string; count: number }[];
+  totalAmount: number;
+};
+
 export const likedBooksSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getLikedBooks: builder.query({
@@ -76,6 +82,21 @@ export const likedBooksSlice = apiSlice.injectEndpoints({
         headers: getHeader(token),
       }),
     }),
+    getLikedBooksStats: builder.query({
+      query: ({ token }) => {
+        return {
+          url: "/likedbooks/stats",
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      },
+      transformResponse: (response: LikedBooksStats) => {
+        return response;
+      },
+    }),
   }),
 });
 
@@ -84,4 +105,5 @@ export const {
   useCheckLikeQuery,
   useRemoveLikeMutation,
   useGetLikedBooksQuery,
+  useGetLikedBooksStatsQuery,
 } = likedBooksSlice;

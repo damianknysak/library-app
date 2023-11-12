@@ -1,22 +1,20 @@
-import React, { useEffect } from "react";
-import { useGetLibraryBooksStatsQuery } from "../../features/librarybooks/libraryBooksSlice";
+import React from "react";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "../../features/auth/authSlice";
-import { BiBook, BiSolidFlame, BiUser } from "react-icons/bi";
+import { useGetLikedBooksStatsQuery } from "../../features/likedbooks/likedBooksSlice";
+import {
+  BiBook,
+  BiLeftTopArrowCircle,
+  BiSolidFlame,
+  BiSolidLeftTopArrowCircle,
+  BiUser,
+} from "react-icons/bi";
 import { shortenString } from "../../utils/StringUtils";
-import { BarChart, PieChart } from "@mui/x-charts";
-import MyLibraryCharts from "./MyLibraryCharts";
+import MyLibraryCharts from "../MyLibrary/MyLibraryCharts";
 
-export type LibraryBooksStats = {
-  topSubjects: { el: string; count: number }[];
-  topAuthors: { el: string; count: number }[];
-  totalAmount: number;
-  readAmount: number;
-};
-
-const MyLibraryStats = () => {
+const FavoriteBooksStats = () => {
   const token = useSelector(selectCurrentToken);
-  const { data, isLoading } = useGetLibraryBooksStatsQuery({ token: token });
+  const { data, isLoading } = useGetLikedBooksStatsQuery({ token: token });
   const authorChartData = data
     ? data.topAuthors.map((el) => {
         return {
@@ -41,21 +39,9 @@ const MyLibraryStats = () => {
           </div>
 
           <div className="flex flex-col justify-between">
-            <span>Liczba książek</span>
+            <span>Polubione książki</span>
             <span className="text-3xl font-bold">
               {data && data.totalAmount}
-            </span>
-          </div>
-        </div>
-        <div className="flex space-x-4">
-          <div className="p-4 bg-gray-100 rounded-2xl">
-            <BiSolidFlame color="blue" size={30} />
-          </div>
-
-          <div className="flex flex-col justify-between">
-            <span>Przeczytane książki</span>
-            <span className="text-3xl font-bold">
-              {data && data.readAmount}
             </span>
           </div>
         </div>
@@ -68,6 +54,18 @@ const MyLibraryStats = () => {
             <span>Najczęstszy autor</span>
             <span className="text-3xl font-bold">
               {data && shortenString(data.topAuthors[0].el, 3)}
+            </span>
+          </div>
+        </div>
+        <div className="flex space-x-4">
+          <div className="p-4 bg-gray-100 rounded-2xl">
+            <BiLeftTopArrowCircle color="blue" size={30} />
+          </div>
+
+          <div className="flex flex-col justify-between">
+            <span>Najczęstszy temat</span>
+            <span className="text-lg font-bold">
+              {data && shortenString(data.topSubjects[0].el, 4)}
             </span>
           </div>
         </div>
@@ -84,4 +82,4 @@ const MyLibraryStats = () => {
   );
 };
 
-export default MyLibraryStats;
+export default FavoriteBooksStats;

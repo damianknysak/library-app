@@ -8,6 +8,7 @@ import {
 import DetailsPanel from "../components/Home/DetailsPanel";
 import bookSearchIndicator from "../assets/book_search.gif";
 import FavoriteBooks from "../components/Favorite/FavoriteBooks";
+import FavoriteBooksStats from "../components/Favorite/FavoriteBooksStats";
 
 const Favorite = () => {
   const token = useSelector(selectCurrentToken);
@@ -64,10 +65,11 @@ const Favorite = () => {
   return (
     <div className="w-full">
       <div className="flex lg:ml-[15rem]">
-        <main className="flex flex-col w-full">
-          <div className="my-5">
+        <main className="flex flex-col space-y-5 w-full">
+          <div>
             <span className="text-2xl font-bold">Twoje ulubione</span>
           </div>
+          <FavoriteBooksStats />
           <FavoriteBooks
             activeBookCard={activeBookCard}
             setActiveBookCard={setActiveBookCard}
