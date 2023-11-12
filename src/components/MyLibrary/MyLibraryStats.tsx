@@ -36,7 +36,7 @@ const MyLibraryStats = () => {
     }
   }, [data]);
   return (
-    <div className="flex flex-col 3xl:flex-row space-y-5 items-center 3xl:space-x-5 justify-between shadow-md shadow-gray-500 p-10 rounded-b-xl overflow-hidden">
+    <div className="flex flex-col space-y-5 items-center justify-between shadow-md shadow-gray-500 p-4 rounded-b-xl overflow-hidden xl:p-10 3xl:space-y-0 3xl:flex-row  3xl:space-x-5  ">
       <div className="flex flex-col h-full space-y-4 p-4 shadow-md rounded-xl w-full">
         <p className="text-xl font-bold">Statystyki</p>
         <div className="flex space-x-4">
@@ -76,9 +76,9 @@ const MyLibraryStats = () => {
           </div>
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-full h-full">
         {data && (
-          <div className="flex flex-1 space-x-5">
+          <div className="flex h-full flex-col 2xl:flex-row flex-1 space-x-5">
             <div className="flex flex-1 flex-col items-center justify-center shadow-md rounded-xl">
               <span className="text-2xl">Tematy</span>
               <PieChart
