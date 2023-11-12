@@ -11,7 +11,7 @@ const MyLibraryCharts: React.FC<{
   authorChartData: ChartsDataType;
 }> = ({ subjectChartData, authorChartData }) => {
   return (
-    <div className="flex h-full flex-col 2xl:flex-row flex-1 space-x-5">
+    <div className="flex h-full flex-col 2xl:flex-row flex-1 space-y-5 2xl:space-y-0 2xl:space-x-5">
       <div className="flex flex-1 flex-col items-center justify-center shadow-md rounded-xl">
         <span className="text-2xl">Tematy</span>
         <PieChart

@@ -84,6 +84,17 @@ const Favorite = () => {
               />
             </div>
           )}
+          {!isLoading && likedBooks.length === 0 && (
+            <div className="w-full flex flex-col items-center justify-center space-y-5">
+              <span className="text-xl font-bold">
+                Brak polubionych książek
+              </span>
+              <img
+                className="w-40 object-contain"
+                src={require("../assets/no-results.png")}
+              />
+            </div>
+          )}
         </main>
 
         <aside className="hidden lg:block lg:min-w-[25rem]">
