@@ -1,71 +1,79 @@
-import React from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import TrendingBookCard, { TrendingBook } from "./TrendingBookCard";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../features/auth/authSlice";
+import Unauthorized from "./RecommendedBooks/Unauthorized";
+import Authorized from "./RecommendedBooks/Authorized";
 
 interface RecommendedBooksProps {
   activeBookCard: string | undefined;
   setActiveBookCard: React.Dispatch<React.SetStateAction<string | undefined>>;
+  data: {
+    recommendedBooks: TrendingBook[] | undefined;
+    length: number;
+    userId: string;
+  };
+  pending: boolean;
+  refetch: any;
 }
 
 const RecommendedBooks: React.FC<RecommendedBooksProps> = ({
   activeBookCard,
   setActiveBookCard,
+  data,
+  pending,
+  refetch,
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const user = useSelector(selectCurrentUser);
+  const [show, setShow] = useState(false);
+  const [recommendedBooks, setRecommendedBooks] = useState<TrendingBook[]>();
+  useEffect(() => {
+    if (data) setRecommendedBooks(data.recommendedBooks);
+  }, [data]);
+  useEffect(() => {
+    if (data && user?._id != data.userId) {
+      setRecommendedBooks([]);
+      setShow(false);
+      refetch();
+    }
+  }, [user]);
+  useEffect(() => {
+    console.log(pending);
+  }, [pending]);
   return (
     <div className="flex flex-col w-full">
       <div className="my-5">
         <span className="text-2xl font-bold">Rekomendacje dla Ciebie</span>
       </div>
-      <div className="flex justify-between shadow-md shadow-gray-500 p-10 rounded-b-xl overflow-hidden">
-        <div className="flex flex-col max-w-[20rem]">
-          <span className="text-lg font-bold my-5">Witaj czytelniku!</span>
-          <span className="text-gray-500 font-bold">
-            Rekomendacje książek tylko dla Ciebie! Zarejestruj się by mieć do
-            nich dostęp.
-          </span>
-          <button
-            onClick={() => {
-              searchParams.set("authorize", "register");
-              setSearchParams(searchParams);
-            }}
-            className="my-5 w-36 h-10 bg-[--secondary] rounded-xl"
-          >
-            <span className="text-white font-bold">Dołącz do nas</span>
-          </button>
-        </div>
-        <img
-          alt="books."
-          className="object-contain w-56"
-          src={require("../../assets/books1.png")}
-        />
-      </div>
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-5 w-full">
-        {/* {data ? (
-      <>
-        {data.works.map((book) => (
-          <TrendingBookCard
-            key={book.key}
-            book={book}
-            activeBookCard={activeBookCard}
-            setActiveBookCard={setActiveBookCard}
-          />
-        ))}
-      </>
-    ) : (
-      <>
-        {LOADING_TRENDING_BOOKS_DATASET.map((item, index) => {
-          return (
-            <TrendingBookCard
-              key={item.index}
-              book={undefined}
-              activeBookCard={undefined}
-              setActiveBookCard={undefined}
+      {user ? (
+        <>
+          {show && (
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-5 w-full">
+              {recommendedBooks &&
+                recommendedBooks &&
+                recommendedBooks.map((book) => {
+                  return (
+                    <TrendingBookCard
+                      key={book.key}
+                      book={book}
+                      activeBookCard={activeBookCard}
+                      setActiveBookCard={setActiveBookCard}
+                    />
+                  );
+                })}
+            </div>
+          )}
+          {!show && (
+            <Authorized
+              length={recommendedBooks ? recommendedBooks.length : undefined}
+              setShow={setShow}
+              pending={pending}
             />
-          );
-        })}
-      </>
-    )} */}
-      </div>
+          )}
+        </>
+      ) : (
+        <Unauthorized />
+      )}
     </div>
   );
 };

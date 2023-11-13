@@ -1,5 +1,6 @@
 import { apiSlice } from "../../app/api/apiSlice";
 import { DetailedBookProps } from "../../components/Home/DetailsPanel";
+import { TrendingBook } from "../../components/Home/TrendingBookCard";
 import { AuthorProps } from "../../components/Shared/BookCardDetailsModal";
 
 const getHeader = (token: string) => {
@@ -85,6 +86,25 @@ export const likedBooksSlice = apiSlice.injectEndpoints({
         headers: getHeader(token),
       }),
     }),
+    getLikedBooksRecommendations: builder.query({
+      query: ({ token }) => {
+        return {
+          url: "/likedbooks/recommendations",
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      },
+      transformResponse: (response: {
+        length: number;
+        recommendedBooks: TrendingBook[];
+        userId: string;
+      }) => {
+        return response;
+      },
+    }),
     getLikedBooksStats: builder.query({
       query: ({ token }) => {
         return {
@@ -110,4 +130,5 @@ export const {
   useRemoveLikeMutation,
   useGetLikedBooksQuery,
   useGetLikedBooksStatsQuery,
+  useGetLikedBooksRecommendationsQuery,
 } = likedBooksSlice;

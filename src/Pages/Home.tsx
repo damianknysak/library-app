@@ -8,6 +8,9 @@ import SearchResults from "../components/Home/SearchResults";
 import { useLocation } from "react-router-dom";
 import { useSearchFetch } from "../hooks/useSearchFetch";
 import bookSearchIndicator from "../assets/book_search.gif";
+import { useGetLikedBooksRecommendationsQuery } from "../features/likedbooks/likedBooksSlice";
+import { useSelector } from "react-redux";
+import { selectCurrentToken } from "../features/auth/authSlice";
 
 export interface TrendingBooksArray {
   works: TrendingBook[];
@@ -16,6 +19,7 @@ export interface TrendingBooksArray {
 const Home: React.FC = () => {
   const [trendingBooksPage, setTrendingBooksPage] = useState(1);
   const [searchBooksPage, setSearchBooksPage] = useState(1);
+  const token = useSelector(selectCurrentToken);
   const {
     data: trendingBooksData,
     pending: trendingBooksPending,
@@ -34,12 +38,23 @@ const Home: React.FC = () => {
     pending: searchBooksPending,
     fetchAsync: refetchSearchBooks,
   } = useSearchFetch();
+  const {
+    data: recommendedBooks,
+    isFetching: recommendedBooksPending,
+    refetch: recommendedBooksRefetch,
+  } = useGetLikedBooksRecommendationsQuery({
+    token: token,
+  });
+
   useEffect(() => {
     const isDetailPanelFromSearch =
       !search &&
       activeBookCard &&
       trendingBooksData &&
-      !trendingBooksData?.works.find((book) => book.key === activeBookCard);
+      !trendingBooksData?.works.find((book) => book.key === activeBookCard) &&
+      !recommendedBooks?.recommendedBooks.find(
+        (book) => book.key === activeBookCard
+      );
     if ((trendingBooksData && !activeBookCard) || isDetailPanelFromSearch) {
       setActiveBookCard(trendingBooksData?.works[0].key);
     }
@@ -48,6 +63,7 @@ const Home: React.FC = () => {
   const mergedData = [
     ...(trendingBooksData?.works || []),
     ...(searchResultsData?.docs || []),
+    ...(recommendedBooks?.recommendedBooks || []),
   ];
 
   //infinite scroll
@@ -92,6 +108,9 @@ const Home: React.FC = () => {
           ) : (
             <>
               <RecommendedBooks
+                data={recommendedBooks!}
+                pending={recommendedBooksPending}
+                refetch={recommendedBooksRefetch}
                 activeBookCard={activeBookCard}
                 setActiveBookCard={setActiveBookCard}
               />

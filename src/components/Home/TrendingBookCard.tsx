@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { shortenString } from "../../utils/StringUtils";
 
 export interface TrendingBook {
   key: string;
@@ -12,6 +13,7 @@ export interface TrendingBook {
   cover_edition_key: string;
   cover_i: number;
   language: string[];
+  authors: { name: string }[] | undefined;
   author_key: string[];
   author_name: string[];
 }
@@ -106,7 +108,7 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
           )}
         </span>
         <div className="text-sm">
-          {!book?.first_publish_year || !book.author_name ? (
+          {!book?.first_publish_year || (!book.author_name && !book.authors) ? (
             <>
               {!book ? (
                 <Skeleton
@@ -121,7 +123,11 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
             </>
           ) : (
             <>
-              <span>{book?.author_name.join(", ")}</span>
+              <span>
+                {!book.authors
+                  ? shortenString(book?.author_name.join(", "), 4)
+                  : shortenString(book.authors[0].name, 4)}
+              </span>
               <span> &middot; {book?.first_publish_year}</span>
             </>
           )}
