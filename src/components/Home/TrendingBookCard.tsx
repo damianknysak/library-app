@@ -100,8 +100,7 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
         <span className="font-bold ">
           {book?.title || (
             <Skeleton
-              height={30}
-              width={200}
+              style={{ height: 30, maxWidth: 200 }}
               baseColor="white"
               highlightColor="gray"
             />

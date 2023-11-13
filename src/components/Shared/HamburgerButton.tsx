@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 
-const HamburgerButton: React.FC = () => {
+const HamburgerButton: React.FC<{
+  setOpened: React.Dispatch<SetStateAction<boolean>>;
+}> = ({ setOpened }) => {
   const [isOpen, setIsOpen] = useState(false);
   const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-[--primary] transition ease transform duration-300`;
 
+  useEffect(() => {
+    setOpened(isOpen);
+  }, [isOpen]);
   return (
     <button
       className="flex flex-col h-12 w-12 border-2 border-[--primary] rounded justify-center items-center group"
