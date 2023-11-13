@@ -21,7 +21,6 @@ const libraryBooksSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBooksFromLibrary: builder.query({
       query: ({ token, page = 1 }) => {
-        console.log(`/librarybooks?page=${page}`);
         return {
           url: `/librarybooks?page=${page}`,
           method: "GET",
@@ -70,7 +69,6 @@ const libraryBooksSlice = apiSlice.injectEndpoints({
     }),
     removeBookFromLibrary: builder.mutation({
       query: ({ body, token }) => {
-        console.log(`/librarybooks/remove`);
         return {
           url: "/librarybooks/remove",
           method: "POST",

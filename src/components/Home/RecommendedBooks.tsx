@@ -37,9 +37,7 @@ const RecommendedBooks: React.FC<RecommendedBooksProps> = ({
       refetch();
     }
   }, [user]);
-  useEffect(() => {
-    console.log(pending);
-  }, [pending]);
+
   return (
     <div className="flex flex-col w-full">
       <div className="my-5">

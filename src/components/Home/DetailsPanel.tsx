@@ -32,6 +32,28 @@ interface DetailedPanelProps {
   author: string;
 }
 
+function getShortenedAuthorName(
+  book: TrendingBook | undefined,
+  categoryBook: CategoryBook | undefined,
+  author: string
+) {
+  if (author) {
+    return shortenString(author, 4);
+  } else if (book) {
+    if (book.authors) {
+      return shortenString(book.authors[0].name, 4);
+    } else if (book.author_name) {
+      return shortenString(book.author_name.join(", "), 4);
+    }
+  } else if (categoryBook) {
+    if (categoryBook?.authors[0]?.name) {
+      return shortenString(categoryBook.authors[0].name, 4);
+    }
+  } else {
+    return "Brak autora.";
+  }
+}
+
 const DetailsPanel: React.FC<DetailedPanelProps> = ({
   activeBook,
   book,
@@ -109,17 +131,7 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
 
         {book || categoryBook || detailsBookInfo ? (
           <div className="flex items-center space-x-5 text-white font-bold">
-            <span>
-              {book
-                ? book.authors
-                  ? shortenString(book.authors[0].name, 4)
-                  : book.author_name
-                  ? shortenString(book.author_name.join(", "), 4)
-                  : "Brak autora."
-                : shortenString(categoryBook?.authors[0].name!, 4)
-                ? shortenString(categoryBook?.authors[0].name!, 4)
-                : shortenString(author, 4)}
-            </span>
+            <span>{getShortenedAuthorName(book, categoryBook, author)}</span>
             <span>
               {book
                 ? book?.first_publish_year
