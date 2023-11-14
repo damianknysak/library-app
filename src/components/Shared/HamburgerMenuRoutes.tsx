@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../features/auth/authSlice";
 import {
@@ -8,7 +8,9 @@ import {
   BiLibrary,
   BiLogOut,
   BiSolidHome,
+  BiUserCheck,
   BiUserCircle,
+  BiUserPlus,
 } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -23,12 +25,44 @@ const HamburgerMenuRoutes: React.FC<{
   const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <div className="lg:hidden flex flex-col font-bold text-lg">
       <div className="md:hidden bg-black/75 p-5 border-y border-white">
         <HamburgerMenuSearchBar setIsHamburgerOpened={setHamburgerOpened} />
       </div>
+      {!user && (
+        <div className="bg-black/75 p-5 border-y border-white flex items-center justify-between">
+          <div
+            onClick={() => {
+              searchParams.set("authorize", "login");
+              setSearchParams(searchParams);
+              setHamburgerOpened(false);
+            }}
+            className={`${
+              location.pathname === "/" ? "text-white" : "text-gray-400"
+            } flex items-center space-x-3 cursor-pointer`}
+          >
+            <BiUserCheck size={30} color="white" />
+            <span className="text-white">Zaloguj się</span>
+          </div>
+          <div
+            onClick={() => {
+              searchParams.set("authorize", "register");
+              setSearchParams(searchParams);
+              setHamburgerOpened(false);
+            }}
+            className={`${
+              location.pathname === "/" ? "text-white" : "text-gray-400"
+            } flex items-center space-x-3 cursor-pointer`}
+          >
+            <BiUserPlus size={30} color="white" />
+            <span className="text-white">Zarejestruj się</span>
+          </div>
+        </div>
+      )}
+
       <Link
         onClick={() => {
           setHamburgerOpened(false);
