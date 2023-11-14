@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { ExtendedBookProps } from "../../features/likedbooks/likedBooksSlice";
+import { useSearchParams } from "react-router-dom";
 
 const FavoriteBookCard: React.FC<{
   bookUrl: string;
@@ -11,7 +12,11 @@ const FavoriteBookCard: React.FC<{
   bookExtended: ExtendedBookProps;
 }> = ({ bookUrl, activeBookCard, setActiveBookCard, bookExtended }) => {
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const handleShowMore = () => {
+    bookUrl && searchParams.set("BookDetailsId", bookUrl);
+    setSearchParams(searchParams);
+  };
   return (
     <div
       onClick={() => {
@@ -89,6 +94,12 @@ const FavoriteBookCard: React.FC<{
             </>
           )}
         </div>
+        <button
+          onClick={handleShowMore}
+          className="lg:hidden mt-10 border bg-[--secondary] p-3 px-10 text-white font-bold rounded-xl"
+        >
+          <span>Pokaż więcej</span>
+        </button>
       </div>
     </div>
   );

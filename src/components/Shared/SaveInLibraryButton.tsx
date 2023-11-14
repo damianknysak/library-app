@@ -65,11 +65,12 @@ const SaveInLibraryButton: React.FC<{ bookUrl: string; book: any }> = ({
         } `}
       >
         <BiBookmark
-          className={`${isBookLiked ? "text-[--secondary]" : "text-gray-500"}`}
-          size={50}
+          className={`h-8 w-8 md:h-14 md:w-14 ${
+            isBookLiked ? "text-[--secondary]" : "text-gray-500"
+          }`}
         />
         <span
-          className={`text-lg  ${
+          className={`text-sm md:text-lg  ${
             isBookLiked ? "text-[--secondary]" : "text-gray-500"
           }`}
         >

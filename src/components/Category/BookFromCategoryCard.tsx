@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { CategoryBook } from "../../hooks/useCategoryBookWorkFetch";
+import { useSearchParams } from "react-router-dom";
 
 interface BookFromCategoryCardProps {
   book: CategoryBook | undefined;
@@ -18,6 +19,12 @@ const BookFromCategoryCard: React.FC<BookFromCategoryCardProps> = ({
 }) => {
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
   const [imageError, setImageError] = useState<boolean>(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleShowMore = () => {
+    book && searchParams.set("BookDetailsId", book.key!);
+    setSearchParams(searchParams);
+  };
   return (
     <div
       onClick={() => {
@@ -99,6 +106,12 @@ const BookFromCategoryCard: React.FC<BookFromCategoryCardProps> = ({
             </>
           )}
         </div>
+        <button
+          onClick={handleShowMore}
+          className="lg:hidden mt-10 border bg-[--secondary] p-3 px-10 text-white font-bold rounded-xl"
+        >
+          <span>Pokaż więcej</span>
+        </button>
       </div>
     </div>
   );

@@ -11,7 +11,9 @@ import HamburgerMenuRoutes from "./HamburgerMenuRoutes";
 const HorizontalHeader: React.FC = () => {
   const user = useSelector(selectCurrentUser);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isHamburgerMenuOpened, setIsHamburgerMenuOpened] = useState(false);
+  const [isHamburgerMenuOpened, setIsHamburgerMenuOpened] = useState<
+    boolean | undefined
+  >(undefined);
 
   return (
     <div className="flex flex-col">
@@ -74,9 +76,9 @@ const HorizontalHeader: React.FC = () => {
         </div>
       </header>
       <nav
-        className={`slider ${
-          isHamburgerMenuOpened ? "slide-in" : "slide-out"
-        } fixed lg:hidden backdrop-blur-md z-10 left-0 right-0 `}
+        className={`slider ${isHamburgerMenuOpened === false && "slide-out"} 
+        ${isHamburgerMenuOpened === true && "slide-in"}
+        fixed backdrop-blur-md z-10 left-0 right-0 `}
       >
         <HamburgerMenuRoutes setHamburgerOpened={setIsHamburgerMenuOpened} />
       </nav>

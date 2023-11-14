@@ -4,6 +4,7 @@ import { selectCurrentUser } from "../features/auth/authSlice";
 import ProfileImage from "../components/Profile/ProfileImage";
 import MyLibraryStats from "../components/MyLibrary/MyLibraryStats";
 import FavoriteBooksStats from "../components/Favorite/FavoriteBooksStats";
+import ProfileImageMd from "../components/Profile/ProfileImageMd";
 
 const Profile: React.FC = () => {
   const user = useSelector(selectCurrentUser);
@@ -14,6 +15,7 @@ const Profile: React.FC = () => {
         <main className="flex flex-col w-full">
           {user ? (
             <div className="space-y-5">
+              <ProfileImageMd />
               <div>
                 <span className="text-2xl font-bold">
                   Statystyki Twojej biblioteki

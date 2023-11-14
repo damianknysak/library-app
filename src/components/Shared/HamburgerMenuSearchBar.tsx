@@ -3,7 +3,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 const HamburgerMenuSearchBar: React.FC<{
-  setIsHamburgerOpened: React.Dispatch<SetStateAction<boolean>>;
+  setIsHamburgerOpened: React.Dispatch<SetStateAction<boolean | undefined>>;
 }> = ({ setIsHamburgerOpened }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();

@@ -25,9 +25,14 @@ const BookDetailsModal = () => {
   useEffect(() => {
     if (BookDetailsId) {
       //modal is active
-      if (globalStateBook && globalStateBook!.key === BookDetailsId) {
+      if (
+        globalStateBook &&
+        globalStateBook!.key === BookDetailsId &&
+        window.innerWidth > 1024
+      ) {
         setBookToBeShown(globalStateBook);
       } else {
+        window.innerWidth <= 1024 && setBookToBeShown(undefined);
         if (data && !pending) {
           setBookToBeShown(data);
         }

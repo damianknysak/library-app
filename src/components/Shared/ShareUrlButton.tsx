@@ -19,13 +19,21 @@ const ShareUrlButton = () => {
   };
   return (
     <>
-      <button onClick={handleClick} className={`flex flex-col items-center`}>
+      <button
+        onClick={handleClick}
+        className={`flex flex-col items-center ${
+          isShared && "border-blue-500"
+        } `}
+      >
         <BiShare
-          className={`${isShared ? "text-blue-500" : "text-gray-500"}`}
-          size={50}
+          className={`h-8 w-8 md:h-14 md:w-14 ${
+            isShared ? "text-blue-500" : "text-gray-500"
+          }`}
         />
         <span
-          className={`text-lg ${isShared ? "text-blue-500" : "text-gray-500"}`}
+          className={`text-sm md:text-lg  ${
+            isShared ? "text-blue-500" : "text-gray-500"
+          }`}
         >
           Kopiuj link
         </span>

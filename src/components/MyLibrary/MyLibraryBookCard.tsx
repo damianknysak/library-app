@@ -10,6 +10,7 @@ import {
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "../../features/auth/authSlice";
 import { BiSolidFlame } from "react-icons/bi";
+import { useSearchParams } from "react-router-dom";
 
 const MyLibraryBookCard: React.FC<{
   bookUrl: string;
@@ -23,6 +24,11 @@ const MyLibraryBookCard: React.FC<{
   const [updateBook] = useUpdateLibraryBookMutation();
   const token = useSelector(selectCurrentToken);
   const [isRead, setIsRead] = useState<boolean>(bookExtended.isRead ?? false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const handleShowMore = () => {
+    bookUrl && searchParams.set("BookDetailsId", bookUrl);
+    setSearchParams(searchParams);
+  };
   return (
     <div
       onClick={() => {
@@ -108,7 +114,9 @@ const MyLibraryBookCard: React.FC<{
             }}
             className={`flex mt-5 items-center justify-center gap-1 p-2 border ${
               isRead ? "border-green-500" : "border-orange-500"
-            }  rounded-xl ${isRead ? "text-green-500" : "text-[--secondary]"}`}
+            }  rounded-xl text-xs sm:text-base ${
+              isRead ? "text-green-500" : "text-[--secondary]"
+            }`}
           >
             <span className="font-bold ">
               {!isRead ? "Oznacz jako przeczytane" : "Przeczytane"}
@@ -116,6 +124,12 @@ const MyLibraryBookCard: React.FC<{
             <BiSolidFlame color="orange" size={30} />
           </button>
         )}
+        <button
+          onClick={handleShowMore}
+          className="lg:hidden mt-10 border bg-[--secondary] p-3 px-10 text-white font-bold rounded-xl"
+        >
+          <span>Pokaż więcej</span>
+        </button>
       </div>
     </div>
   );

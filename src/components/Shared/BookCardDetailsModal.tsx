@@ -6,6 +6,8 @@ import LikeButton from "./LikeButton";
 import ShareUrlButton from "./ShareUrlButton";
 import { Rating } from "react-simple-star-rating";
 import SaveInLibraryButton from "./SaveInLibraryButton";
+import { BiPlus } from "react-icons/bi";
+import { useSearchParams } from "react-router-dom";
 
 export type AuthorProps = {
   name: string;
@@ -17,7 +19,7 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
   book,
 }) => {
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const [author, setAuthor] = useState<AuthorProps>();
 
   const getAuthorDetails = async () => {
@@ -35,8 +37,6 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
     return undefined;
   };
 
-  useLockBodyScroll();
-
   useEffect(() => {
     //resetting the state
     if (book && author && book.authors[0].author.key != author?.key) {
@@ -52,11 +52,21 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
   }, [book, author]);
 
   return (
-    <div className="relative overflow-hidden flex flex-col p-10 md:w-[60rem] md:h-[50rem] justify-center bg-white rounded-lg">
+    <div className="relative overflow-hidden flex flex-col p-10 w-[40rem] h-[40rem]  md:w-[60rem] md:h-[50rem] justify-center bg-white rounded-lg">
+      <div
+        onClick={() => {
+          const currentParams = new URLSearchParams(searchParams.toString());
+          currentParams.delete("BookDetailsId");
+          setSearchParams(currentParams);
+        }}
+        className="absolute cursor-pointer top-5 right-5 z-10 rotate-45 bg-black/50 hover:bg-black/75 transition-all rounded-full"
+      >
+        <BiPlus size={40} color="white" />
+      </div>
       <div className="absolute top-0 left-0 right-0 h-56 bg-[--primary] ">
         {book && book.covers && (
           <img
-            className={` backdrop-blur-lg blur-xl w-full h-full border-2 ${
+            className={`backdrop-blur-lg blur-xl w-full h-full border-2 ${
               !isImageLoaded && "hidden"
             }  rounded-xl`}
             src={`https://covers.openlibrary.org/b/id/${book?.covers[0]}-M.jpg`}
@@ -76,7 +86,7 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
             <>
               {book.covers ? (
                 <img
-                  className={`mt-10 h-72 object-contain bg-black border-2 ${
+                  className={`md:mt-10 h-56 md:h-72 object-contain bg-black border-2 ${
                     !isImageLoaded && "hidden"
                   }  rounded-xl`}
                   src={`https://covers.openlibrary.org/b/id/${book?.covers[0]}-M.jpg`}
@@ -93,7 +103,7 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
             </>
           )}
         </div>
-        <section className="flex flex-col items-center mt-2 space-y-2">
+        <section className="flex flex-col items-center mt-2 space-y-1 md:space-y-2">
           <div className="z-10">
             {book ? (
               <div className="text-white flex space-x-2 items-center">
@@ -114,12 +124,12 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
             )}
           </div>
           <div className="z-10">
-            <span className="text-xl font-bold">
+            <span className="text-lg md:text-xl font-bold">
               {book ? book.title : <Skeleton height={28} width={200} />}
             </span>
           </div>
           <div className="z-10">
-            <span className="text-xl text-gray-500">
+            <span className="md:text-xl text-gray-500">
               {author ? author.name : <Skeleton height={28} width={150} />}
             </span>
           </div>
@@ -155,7 +165,7 @@ const BookCardDetailsModal: React.FC<{ book: DetailedBookProps }> = ({
           </div>
         </section>
       </div>
-      <div className="w-full border border-gray-500 my-5"></div>
+      <div className="w-full border border-gray-500 my-2 md:my-5"></div>
       {book ? (
         <article className="z-10 p-10 pt-0 overflow-auto">
           {book.description ? book.description : "Brak opisu."}

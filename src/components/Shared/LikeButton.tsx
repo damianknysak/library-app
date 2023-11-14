@@ -69,11 +69,12 @@ const LikeButton: React.FC<{ bookUrl: string; book: any }> = ({
         } `}
       >
         <BiHeart
-          className={`${isBookLiked ? "text-red-600" : "text-gray-500"}`}
-          size={50}
+          className={`h-8 w-8 md:h-14 md:w-14 ${
+            isBookLiked ? "text-red-600" : "text-gray-500"
+          }`}
         />
         <span
-          className={`text-lg  ${
+          className={`text-sm md:text-lg  ${
             isBookLiked ? "text-red-600" : "text-gray-500"
           }`}
         >

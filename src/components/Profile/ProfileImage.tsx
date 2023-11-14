@@ -4,7 +4,6 @@ import { BASE_API_URL } from "../../app/api/apiSlice";
 import {
   selectCurrentToken,
   selectCurrentUser,
-  setCredentials,
   setProfileImage,
 } from "../../features/auth/authSlice";
 import { BiEdit, BiSave } from "react-icons/bi";

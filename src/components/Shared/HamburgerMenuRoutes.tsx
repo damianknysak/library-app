@@ -18,14 +18,14 @@ import { SetStateAction } from "react";
 import HamburgerMenuSearchBar from "./HamburgerMenuSearchBar";
 
 const HamburgerMenuRoutes: React.FC<{
-  setHamburgerOpened: React.Dispatch<SetStateAction<boolean>>;
+  setHamburgerOpened: React.Dispatch<SetStateAction<boolean | undefined>>;
 }> = ({ setHamburgerOpened }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
 
   return (
-    <div className="flex flex-col font-bold text-lg">
+    <div className="lg:hidden flex flex-col font-bold text-lg">
       <div className="md:hidden bg-black/75 p-5 border-y border-white">
         <HamburgerMenuSearchBar setIsHamburgerOpened={setHamburgerOpened} />
       </div>

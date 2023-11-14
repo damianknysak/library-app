@@ -28,6 +28,10 @@ body {
     overflow-x: hidden;
 }
 
+.slider {
+  top: -600px;
+}
+
 .slide-in {
   animation: slide-in 0.5s forwards;
 }

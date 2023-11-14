@@ -1,8 +1,8 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 
 const HamburgerButton: React.FC<{
-  opened: boolean;
-  setOpened: React.Dispatch<SetStateAction<boolean>>;
+  opened: boolean | undefined;
+  setOpened: React.Dispatch<SetStateAction<boolean | undefined>>;
 }> = ({ setOpened, opened }) => {
   // const [isOpen, setIsOpen] = useState(false);
   const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-[--primary] transition ease transform duration-300`;

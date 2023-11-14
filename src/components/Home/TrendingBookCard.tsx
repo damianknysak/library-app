@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { shortenString } from "../../utils/StringUtils";
+import { useSearchParams } from "react-router-dom";
 
 export interface TrendingBook {
   key: string;
@@ -33,6 +34,8 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
 }) => {
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
   const [imageError, setImageError] = useState<boolean>(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
     if (book) {
       if (!book.cover_edition_key && !book.cover_i && book.title) {
@@ -40,7 +43,10 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
       }
     }
   }, [book]);
-
+  const handleShowMore = () => {
+    book && searchParams.set("BookDetailsId", book.key!);
+    setSearchParams(searchParams);
+  };
   return (
     <div
       onClick={() => {
@@ -131,6 +137,12 @@ const TrendingBookCard: React.FC<TrendingBookCardProps> = ({
             </>
           )}
         </div>
+        <button
+          onClick={handleShowMore}
+          className="lg:hidden mt-10 border bg-[--secondary] p-3 px-10 text-white font-bold rounded-xl"
+        >
+          <span>Pokaż więcej</span>
+        </button>
       </div>
     </div>
   );
