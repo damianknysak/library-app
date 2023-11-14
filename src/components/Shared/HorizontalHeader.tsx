@@ -6,14 +6,16 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../features/auth/authSlice";
 import { BASE_API_URL } from "../../app/api/apiSlice";
+import HamburgerMenuRoutes from "./HamburgerMenuRoutes";
 
 const HorizontalHeader: React.FC = () => {
   const user = useSelector(selectCurrentUser);
   const [searchParams, setSearchParams] = useSearchParams();
   const [isHamburgerMenuOpened, setIsHamburgerMenuOpened] = useState(false);
+
   return (
     <div className="flex flex-col">
-      <header className="w-full p-10 h-28 fixed top-0 left-0 right-0 flex justify-between items-center backdrop-blur-xl bg-white/30 z-10">
+      <header className="z-20 w-full p-10 h-28 fixed top-0 left-0 right-0 flex justify-between items-center backdrop-blur-xl bg-white/30">
         <div className="flex items-center justify-center">
           <Link to={"/"}>
             <div className="flex space-x-2 items-center justify-center">
@@ -30,7 +32,10 @@ const HorizontalHeader: React.FC = () => {
           </div>
         </div>
         <div className="flex lg:hidden">
-          <HamburgerButton setOpened={setIsHamburgerMenuOpened} />
+          <HamburgerButton
+            opened={isHamburgerMenuOpened}
+            setOpened={setIsHamburgerMenuOpened}
+          />
         </div>
         <div className="hidden w-[20rem] lg:flex items-center justify-between font-bold space-x-5">
           {user ? (
@@ -71,9 +76,9 @@ const HorizontalHeader: React.FC = () => {
       <nav
         className={`slider ${
           isHamburgerMenuOpened ? "slide-in" : "slide-out"
-        } fixed lg:hidden left-0 right-0 `}
+        } fixed lg:hidden backdrop-blur-md z-10 left-0 right-0 `}
       >
-        <span className="text-black text-xs">Hello</span>
+        <HamburgerMenuRoutes setHamburgerOpened={setIsHamburgerMenuOpened} />
       </nav>
     </div>
   );

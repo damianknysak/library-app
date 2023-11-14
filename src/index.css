@@ -28,10 +28,6 @@ body {
     overflow-x: hidden;
 }
 
-.slider {
-  background: blue;
-}
-
 .slide-in {
   animation: slide-in 0.5s forwards;
 }
@@ -41,12 +37,12 @@ body {
 }
   
 @keyframes slide-in {
-  0% { top: -300px }
+  0% { top: -600px }
   100% { top: 112px }
 
 }
   
 @keyframes slide-out {
   0% {top: 112px}
-  100% { top: -300px }
+  100% { top: -600px }
 }

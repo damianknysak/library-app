@@ -1,11 +1,15 @@
-import React, { useRef } from "react";
+import React, { SetStateAction, useRef } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-const SearchBar: React.FC = () => {
+
+const HamburgerMenuSearchBar: React.FC<{
+  setIsHamburgerOpened: React.Dispatch<SetStateAction<boolean>>;
+}> = ({ setIsHamburgerOpened }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
+      setIsHamburgerOpened(false);
       const searchValue = inputRef.current?.value;
       if (searchValue) {
         navigate(`/?search=${searchValue}`);
@@ -24,7 +28,7 @@ const SearchBar: React.FC = () => {
         <BiSearchAlt size={25} />
         <input
           ref={inputRef}
-          className="bg-gray-300 outline-none w-64"
+          className="bg-gray-300 outline-none w-full"
           type="text"
           placeholder="Szukaj książek, autorów czy edycji ..."
           onKeyDown={handleKeyDown}
@@ -34,4 +38,4 @@ const SearchBar: React.FC = () => {
   );
 };
 
-export default SearchBar;
+export default HamburgerMenuSearchBar;
