@@ -17,7 +17,7 @@ const HorizontalHeader: React.FC = () => {
 
   return (
     <div className="flex flex-col">
-      <header className="z-20 w-full p-10 h-28 fixed top-0 left-0 right-0 flex justify-between items-center backdrop-blur-xl bg-white/30">
+      <header className="z-20 max-w-[2000px] mx-auto p-10 h-28 fixed top-0 left-0 right-0 flex justify-between items-center backdrop-blur-xl bg-white/30">
         <div className="flex items-center justify-center">
           <Link to={"/"}>
             <div className="flex space-x-2 items-center justify-center">

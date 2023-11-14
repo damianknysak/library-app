@@ -18,8 +18,8 @@ const AsideHeader: React.FC = () => {
   const user = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
   return (
-    <div className="lg:fixed left-0 top-15 w-[15rem]">
-      <aside className="lg:flex hidden flex-col justify-center items-center mt-20 min-w-[15rem]">
+    <div className="lg:sticky left-0 top-16 w-[15rem]">
+      <aside className="lg:flex hidden flex-col justify-center items-start mt-20 min-w-[15rem]">
         <div className="flex flex-col font-bold text-lg space-y-4">
           <Link to="/">
             <div

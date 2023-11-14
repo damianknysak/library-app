@@ -96,8 +96,8 @@ const DetailsPanel: React.FC<DetailedPanelProps> = ({
   };
 
   return (
-    <aside className="lg:fixed right-0 top-15 w-[25rem]">
-      <div className="mx-10 hidden lg:flex flex-col items-center space-y-4 p-14 bg-[--primary] h-[50rem]">
+    <aside className="lg:sticky top-32 w-[25rem]">
+      <div className="ml-20 hidden lg:flex flex-col items-center space-y-4 p-14 bg-[--primary] h-[50rem]">
         <span className="text-white text-lg font-bold text-center">
           {book?.title || categoryBook?.title || detailsBookInfo?.title || (
             <Skeleton height={30} width={230} />

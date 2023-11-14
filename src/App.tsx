@@ -16,7 +16,7 @@ import { selectCurrentUser } from "./features/auth/authSlice";
 function App() {
   const user = useSelector(selectCurrentUser);
   return (
-    <div className="w-screen min-h-screen p-10 flex flex-col lg:flex-row">
+    <div className="max-w-[2000px] mx-auto min-h-screen p-10 flex flex-col lg:flex-row">
       <Header />
       <div className="mt-10 lg:mt-20 w-full">
         <AuthModal />
