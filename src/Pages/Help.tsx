@@ -3,7 +3,7 @@ import React from "react";
 function Help() {
   return (
     <div className="w-full">
-      <div className="flex lg:ml-[15rem]">
+      <div className="flex ">
         <main className="flex flex-col w-full">
           <div className="flex flex-col lg:flex-row justify-between shadow-md shadow-gray-500 p-10 rounded-b-xl overflow-hidden">
             <div className="flex flex-col max-w-[20rem]">

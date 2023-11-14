@@ -93,7 +93,7 @@ const Favorite = () => {
 
   return (
     <div className="w-full">
-      <div className="flex lg:ml-[15rem]">
+      <div className="flex ">
         <main className="flex flex-col space-y-5 w-full">
           <div>
             <span className="text-2xl font-bold">Twoje ulubione</span>

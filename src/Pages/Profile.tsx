@@ -11,7 +11,7 @@ const Profile: React.FC = () => {
 
   return (
     <div className="w-full">
-      <div className="flex lg:ml-[15rem]">
+      <div className="flex ">
         <main className="flex flex-col w-full">
           {user ? (
             <div className="space-y-5">

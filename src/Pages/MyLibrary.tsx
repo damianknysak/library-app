@@ -90,7 +90,7 @@ const MyLibrary = () => {
   }, [isLoading]);
   return (
     <div className="w-full">
-      <div className="flex lg:ml-[15rem]">
+      <div className="flex ">
         <main className="flex flex-col w-full space-y-5">
           <div>
             <span className="text-2xl font-bold">Twoje biblioteka</span>

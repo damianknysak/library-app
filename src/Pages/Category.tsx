@@ -67,7 +67,7 @@ const Category: React.FC = () => {
   return (
     <div className="w-full">
       <BookDetailsModal />
-      <div className="flex lg:ml-[15rem]">
+      <div className="flex ">
         <main className="flex flex-col w-full space-y-10">
           <Categories setPage={setPage} activeCategory={subject!} />
           {subject && (
