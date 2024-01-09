@@ -94,6 +94,16 @@ const Home: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [trendingBooksPending, searchBooksPending]);
+  //to be deleted
+  const testFetch = async () => {
+    const response = await fetch("http://35.240.73.109/books/test");
+    const responseJson = await response.json();
+    console.log(responseJson);
+  };
+
+  useEffect(() => {
+    testFetch();
+  }, []);
 
   return (
     <div className="w-full">
