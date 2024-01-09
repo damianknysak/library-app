@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/library-app/static/css/main.49d76b95.css",
+    "main.js": "/library-app/static/js/main.a2ee8b3b.js",
+    "static/js/787.8125c51d.chunk.js": "/library-app/static/js/787.8125c51d.chunk.js",
+    "static/media/book_search.gif": "/library-app/static/media/book_search.966dfd4e9072ad936e5d.gif",
+    "static/media/books1.png": "/library-app/static/media/books1.4ef585702ef4cda73a7c.png",
+    "static/media/sciencemathematics-icon.png": "/library-app/static/media/sciencemathematics-icon.0cf900ae5f44c20a38e2.png",
+    "static/media/religion-icon.png": "/library-app/static/media/religion-icon.a80aac706d7b7bbe783c.png",
+    "static/media/arts-icon.png": "/library-app/static/media/arts-icon.4bf005b5a62122d3182c.png",
+    "static/media/biography-icon.png": "/library-app/static/media/biography-icon.b00e9ef74a2efc798c33.png",
+    "static/media/juvenile_fiction-icon.png": "/library-app/static/media/juvenile_fiction-icon.3aef245e066e4cf39583.png",
+    "static/media/fiction-icon.png": "/library-app/static/media/fiction-icon.ac27d8d4628b85d6602c.png",
+    "static/media/no-results.png": "/library-app/static/media/no-results.96889580d34784864d02.png",
+    "static/media/exercise-icon.png": "/library-app/static/media/exercise-icon.4340c3a633481e7202ef.png",
+    "static/media/animals-icon.png": "/library-app/static/media/animals-icon.2527b704dc9f5638711a.png",
+    "static/media/history-icon.png": "/library-app/static/media/history-icon.727dec6f2ed3d1408ff2.png",
+    "index.html": "/library-app/index.html",
+    "main.49d76b95.css.map": "/library-app/static/css/main.49d76b95.css.map",
+    "main.a2ee8b3b.js.map": "/library-app/static/js/main.a2ee8b3b.js.map",
+    "787.8125c51d.chunk.js.map": "/library-app/static/js/787.8125c51d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.49d76b95.css",
+    "static/js/main.a2ee8b3b.js"
+  ]
+}
